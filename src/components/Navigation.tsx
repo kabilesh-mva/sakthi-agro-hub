@@ -14,6 +14,7 @@ export const Navigation = () => {
     { to: "/services", label: "Services" },
     { to: "/gallery", label: "Gallery" },
     { to: "/contact", label: "Contact" },
+    { to: "/auth", label: "Admin" },
   ];
 
   return (
