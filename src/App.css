@@ -1,3 +1,14 @@
+/* Sakthi Agro Brand Styles */
+:root {
+  --brand-primary-green: #2E7D32;
+  --brand-primary-dark-green: #1B5E20;
+  --brand-accent-orange: #FF6F00;
+  --brand-accent-dark-orange: #E65100;
+  --brand-light-green: #E8F5E9;
+  --brand-dark-gray: #3333;
+ --brand-white: #FFFFFF;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,10 +16,68 @@
   text-align: center;
 }
 
+/* Apply brand colors to scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-light-green);
+}
+
+::-webkit-scrollbar-thumb {
+ background: var(--brand-primary-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-accent-orange);
+}
+
+/* Focus styles for accessibility */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--brand-accent-orange);
+  outline-offset: 2px;
+}
+
+/* Custom animations for logo elements */
+@keyframes gearSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gear-spin {
+ animation: gearSpin 2s linear infinite;
+}
+
+/* Shield reveal animation */
+@keyframes shieldReveal {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.shield-reveal {
+  animation: shieldReveal 0.5s ease-out;
+}
+
 .logo {
   height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+ padding: 1.5em;
+ will-change: filter;
   transition: filter 300ms;
 }
 .logo:hover {

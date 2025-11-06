@@ -58,11 +58,11 @@ const Contact = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
+      <section className="py-12 sm:py-16 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl font-bold mb-6">Contact Us</h1>
-            <p className="text-xl opacity-90">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-6">Contact Us</h1>
+            <p className="text-lg sm:text-xl opacity-90">
               Get in touch with us for inquiries and support
             </p>
           </div>
@@ -70,9 +70,9 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-16">
+      <section className="py-8 sm:py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 gap-8 sm:gap-12 max-w-6xl mx-auto">
             {/* Contact Information */}
             <div>
               <h2 className="text-3xl font-bold mb-8">Get In Touch</h2>
@@ -85,8 +85,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-bold mb-1">Phone</h3>
-                      <a href="tel:+919876543210" className="text-muted-foreground hover:text-primary">
-                        +91 98765 43210
+                      <a href="tel:+919443600205" className="text-muted-foreground hover:text-primary">
+                        +91 94436 00205
                       </a>
                     </div>
                   </CardContent>
