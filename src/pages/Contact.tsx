@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { FAQSection } from "@/components/FAQSection";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -70,78 +71,42 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-8 sm:py-16">
+      <section className="py-8 sm:py-16 bg-[#F9F9F9]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 sm:gap-12 max-w-6xl mx-auto">
-            {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8">Get In Touch</h2>
-              
-              <div className="space-y-6 mb-8">
-                <Card>
-                  <CardContent className="p-6 flex items-start gap-4">
-                    <div className="rounded-full bg-primary/10 p-3">
-                      <Phone className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">Phone</h3>
-                      <a href="tel:+919443600205" className="text-muted-foreground hover:text-primary">
-                        +91 94436 00205
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6 flex items-start gap-4">
-                    <div className="rounded-full bg-primary/10 p-3">
-                      <Mail className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">Email</h3>
-                      <a href="mailto:info@sakthiagro.com" className="text-muted-foreground hover:text-primary">
-                        info@sakthiagro.com
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6 flex items-start gap-4">
-                    <div className="rounded-full bg-primary/10 p-3">
-                      <MapPin className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">Address</h3>
-                      <p className="text-muted-foreground">
-                        Coimbatore, Tamil Nadu, India
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-6 flex items-start gap-4">
-                    <div className="rounded-full bg-primary/10 p-3">
-                      <Clock className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">Business Hours</h3>
-                      <p className="text-muted-foreground">
-                        Mon - Sat: 9:00 AM - 7:00 PM<br />
-                        Sunday: Closed
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
+            <p className="text-lg text-muted-foreground">We're here to help you with any questions or inquiries</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-[#2E7D32]/10 text-center">
+              <Phone className="h-10 w-10 text-[#2E7D32] mx-auto mb-4" />
+              <h3 className="font-bold text-lg mb-2">Phone</h3>
+              <p className="text-muted-foreground">Call us for immediate assistance</p>
+              <a href="tel:+919443600205" className="text-[#2E7D32] font-bold hover:underline mt-2 block">+91 94436 00205</a>
             </div>
-
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-[#2E7D32]/10 text-center">
+              <Mail className="h-10 w-10 text-[#2E7D32] mx-auto mb-4" />
+              <h3 className="font-bold text-lg mb-2">Email</h3>
+              <p className="text-muted-foreground">Send us an email</p>
+              <a href="mailto:info@sakthiagro.com" className="text-[#2E7D32] font-bold hover:underline mt-2 block">info@sakthiagro.com</a>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-[#2E7D32]/10 text-center">
+              <Clock className="h-10 w-10 text-[#2E7D32] mx-auto mb-4" />
+              <h3 className="font-bold text-lg mb-2">Business Hours</h3>
+              <p className="text-muted-foreground">We're available</p>
+              <p className="text-[#2E7D32] font-bold mt-2">Mon-Sat: 8AM - 8PM</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
             {/* Contact Form */}
-            <div>
-              <Card>
-                <CardContent className="p-8">
-                  <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+            <div className="lg:order-1">
+              <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+              <Card className="h-full">
+                <CardContent className="p-6 sm:p-8">
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                       <Input
@@ -172,7 +137,7 @@ const Contact = () => {
                     <div>
                       <Textarea
                         placeholder="Your Message"
-                        rows={6}
+                        rows={4}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
@@ -192,9 +157,37 @@ const Contact = () => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Map Section */}
+            <div className="lg:order-2">
+              <h2 className="text-2xl font-bold mb-6">Find Our Location</h2>
+              <div className="rounded-xl overflow-hidden shadow-lg h-80">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.411436852982!2d76.96285687504522!3d11.00725389155468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8597b1fcfe0b3%3A0x640b518711d823a1!2sSakthi%20agro!5e0!3m2!1sen!2sin!4v1762419961612!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Sakthi Agro Location Map"
+                ></iframe>
+              </div>
+              <div className="mt-4 p-4 bg-[#F9F9F9] rounded-lg border border-[#2E7D32]/10">
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-5 w-5 text-[#2E7D32] mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-bold">Sakthi Agro</h3>
+                    <p className="text-sm text-muted-foreground">123 Agriculture Complex, Coimbatore Road, Tamil Nadu</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+      <FAQSection />
 
       <Footer />
       <WhatsAppButton />

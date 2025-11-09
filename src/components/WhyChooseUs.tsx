@@ -1,30 +1,25 @@
-import { Shield, Wrench, Clock, Award, CheckCircle, Users, Star, Phone, Package } from "lucide-react";
+import { Shield, Wrench, Clock, Award, CheckCircle, Users, Star, Phone, Package, Heart, Languages, HardHat, Check, Handshake } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const features = [
-  {
+ {
     icon: Users,
-    title: "30+ Years Experience",
-    description: "Serving farmers since 2012 with dedication and expertise",
-    details: "With over three decades of experience in the agricultural industry, we understand the unique challenges farmers face. Our expertise ensures you get the right solutions for your farming needs.",
+    title: "Trusted by Generations of Farmers",
+    description: "Serving farming communities with dedication and expertise since 2012",
+    details: "With over a decade of experience in the agricultural industry, we understand the unique challenges farmers face. Our expertise ensures you get the right solutions for your farming needs.",
   },
   {
     icon: Shield,
-    title: "Warranty Support",
-    description: "Comprehensive warranty coverage on all products",
+    title: "Peace of Mind with Every Purchase",
+    description: "Comprehensive warranty and support on all products",
     details: "We stand behind our products with comprehensive warranty coverage. Our support team is always ready to assist you with any warranty claims or service needs.",
   },
   {
-    icon: Wrench,
-    title: "Expert Service",
-    description: "Professional repair and maintenance by skilled technicians",
+    icon: Languages,
+    title: "Local Experts Who Speak Your Language",
+    description: "Professional service in your preferred language and dialect",
     details: "Our certified technicians provide professional repair and maintenance services. We use genuine parts and follow manufacturer guidelines to ensure optimal performance.",
-  },
-  {
-    icon: Package,
-    title: "Genuine Products",
-    description: "100% authentic equipment and spare parts",
-    details: "We only stock genuine products from trusted manufacturers. This ensures reliability, performance, and compatibility with your existing equipment.",
   },
 ];
 
@@ -46,58 +41,120 @@ export const WhyChooseUs = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        {/* Stats Section with Animated Count-Up */}
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-16 relative z-20">
+        {/* Stats Section with Circular Badges */}
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-16 relative z-20 max-w-4xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.1
+              }
+            },
+            hidden: {}
+          }}
+        >
           {stats.map((stat, index) => (
-            <div key={index} className="text-center bg-[#E8F5E9] p-4 sm:p-6 rounded-xl backdrop-blur-sm relative overflow-hidden group border-white/20 hover:border-[#2E7D32]/30 transition-all duration-300 hover:shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2E7D32] to-[#FF6F00] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#2E7D32] mb-1 sm:mb-2 animate-pulse">{stat.value}</div>
-              <div className="text-sm sm:text-[#33333] flex items-center justify-center gap-1 mt-1">
-                <stat.icon className="h-4 w-4" />
-                {stat.label}
+            <motion.div
+              key={index}
+              className="flex flex-col items-center text-center relative z-20"
+              variants={{
+                visible: { opacity: 1, y: 0, scale: 1 },
+                hidden: { opacity: 0, y: 20, scale: 0.9 }
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full flex flex-col items-center justify-center p-3 bg-gradient-to-br from-[#E8F5E9] to-white group hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-xl border border-[#2E7D32]/20 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2E7D32] to-[#FF6F00] opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                <div className="flex flex-col items-center justify-center z-10 h-full">
+                  <stat.icon className="h-4 w-4 text-[#2E7D32] mb-1" />
+                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#2E7D32] mt-1 leading-tight">{stat.value}</div>
+                </div>
               </div>
-            </div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-2 px-1">{stat.label}</div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="text-center mb-8 sm:mb-12 relative z-20">
+        <motion.div
+          className="text-center mb-8 sm:mb-12 relative z-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-4">
             Why Choose Sakthi Agro?
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-3 sm:mb-6">
             Your trusted partner for quality agricultural solutions
           </p>
-          <div className="inline-block bg-[#2E7D32] text-white px-4 sm:px-6 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold">
-            Since 2012
-          </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative z-20">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 relative z-20 max-w-6xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.1
+              }
+            },
+            hidden: {}
+          }}
+        >
           {features.map((feature, index) => {
             // Alternate between green and white backgrounds for visual rhythm
             const isWhite = index % 2 === 0;
             return (
-              <Card key={index} className={`${isWhite ? 'bg-white' : 'bg-[#F9F9F9]'} border-2 hover:border-[#2E7D32] transition-colors group cursor-pointer h-full relative overflow-hidden border-[#2E7D32] hover:shadow-lg hover:shadow-[#2E7D32]/20`}>
-                <CardContent className="p-4 sm:p-6 text-center relative h-full flex flex-col justify-between z-10">
-                  <div className="flex flex-col items-center justify-center flex-grow relative z-10">
-                    <div className="mb-3 sm:mb-4 flex justify-center relative z-10">
-                      <div className={`rounded-full ${isWhite ? 'bg-[#E8F5E9]' : 'bg-[#E8F5E9]/70'} p-3 sm:p-4 group-hover:bg-[#2E7D32] transition-colors duration-300 relative z-10`}>
-                        <feature.icon className={`h-6 sm:h-8 w-6 sm:w-8 ${isWhite ? 'text-[#2E7D32]' : 'text-[#2E7D32]'} group-hover:text-[#FF6F00] transition-colors duration-300`} />
+              <motion.div
+                key={index}
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 20 }
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Card className={`${isWhite ? 'bg-white' : 'bg-[#F9F9F9]'} border-2 hover:border-[#2E7D32] transition-colors group cursor-pointer h-full relative overflow-hidden border-[#2E7D32] hover:shadow-lg hover:shadow-[#2E7D32]/20`}>
+                  <CardContent className="p-4 sm:p-6 text-center relative h-full flex flex-col justify-between z-10">
+                    <div className="flex flex-col items-center justify-center flex-grow relative z-10">
+                      <div className="mb-3 sm:mb-4 flex justify-center relative z-10">
+                        <div className={`rounded-full ${isWhite ? 'bg-[#E8F5E9]' : 'bg-[#E8F5E9]/70'} p-3 sm:p-4 group-hover:bg-[#2E7D32] transition-colors duration-300 relative z-10`}>
+                          <feature.icon className={`h-6 sm:h-8 w-6 sm:w-8 ${isWhite ? 'text-[#2E7D32]' : 'text-[#2E7D32]'} group-hover:text-[#FF6F00] transition-colors duration-300`} />
+                        </div>
                       </div>
+                      <h3 className={`text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-[#2E7D32] transition-colors duration-300 relative z-10`}>
+                        {feature.title}
+                      </h3>
+                      <p className={`text-sm ${isWhite ? 'text-muted-foreground' : 'text-[#333333]'} mb-2 relative z-10`}>
+                        {feature.description}
+                      </p>
                     </div>
-                    <h3 className={`text-lg sm:text-xl font-bold ${isWhite ? 'text-foreground' : 'text-[#2E7D32]'} mb-2 group-hover:text-[#2E7D32] transition-colors duration-300 relative z-10`}>
-                      {feature.title}
-                    </h3>
-                    <p className={`text-sm ${isWhite ? 'text-muted-foreground' : 'text-[#333333]'} mb-2 relative z-10`}>
-                      {feature.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
+        
+        {/* Since 2012 Badge */}
+        <motion.div
+          className="flex justify-center mt-12 relative z-20"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="inline-block bg-gradient-to-r from-[#2E7D32] to-[#FF6F00] text-white px-6 py-2 rounded-full text-sm sm:text-base font-bold shadow-lg">
+            Since 2012
+          </div>
+        </motion.div>
       </div>
+
     </section>
-  );
+ );
 };

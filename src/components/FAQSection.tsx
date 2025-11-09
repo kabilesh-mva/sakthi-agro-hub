@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { HelpCircle, Tractor, Droplets, Gavel, Wrench, Users } from "lucide-react";
 
 const faqData = [
@@ -15,7 +14,7 @@ const faqData = [
   },
   {
     question: "What are your business hours?",
-    answer: "We are open Monday to Saturday from 9:00 AM to 6:00 PM and on Sundays from 10:00 AM to 4:00 PM. Our expert support is available 24/7 for urgent service needs.",
+    answer: "We are open Monday to Saturday from 9:00 AM to 6:00 PM and on Sundays from 10:0 AM to 4:00 PM. Our expert support is available 24/7 for urgent service needs.",
     icon: HelpCircle
   },
   {
@@ -46,9 +45,15 @@ const faqData = [
 ];
 
 export const FAQSection = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
   return (
-    <section className="py-16 sm:py-20 bg-background" id="faq">
-      <div className="container mx-auto px-4 max-w-4xl mx-auto relative z-10">
+    <section className="py-16 sm:py-20 bg-gradient-to-br from-green-50 to-emerald-50" id="faq">
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <div className="text-center mb-12 sm:mb-16 relative z-20">
           <div className="flex items-center justify-center gap-3 mb-4">
             <HelpCircle className="h-8 w-8 text-[#2E7D32]" />
@@ -58,24 +63,28 @@ export const FAQSection = () => {
             Common questions on sprayers, pumps, engines, and spare parts
           </p>
         </div>
-        <div className="space-y-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {faqData.map((faq, index) => (
-            <Accordion type="single" collapsible key={index}>
-              <AccordionItem value={`item-${index}`} className="border rounded-xl p-6 bg-card hover:shadow-lg transition-all duration-300 border-[#2E7D32]/20 hover:border-[#2E7D32]/40 overflow-hidden">
-                <AccordionTrigger className="text-left text-lg font-medium text-foreground hover:text-[#2E7D32] flex items-center gap-3 text-xl py-2">
+            <div key={index} className="bg-white rounded-xl shadow-sm border border-[#2E7D32]/10 overflow-hidden transition-all duration-300 hover:shadow-md h-full flex flex-col cursor-pointer" onClick={() => toggleFAQ(index)}>
+              <div className="p-5 flex-shrink-0 border-b border-[#2E7D32]/10">
+                <div className="flex items-center gap-3 mb-2">
                   <div className="p-2 bg-[#E8F5E9] rounded-lg text-[#2E7D32] flex-shrink-0">
                     <faq.icon className="h-5 w-5" />
                   </div>
-                  <span className="text-left">{faq.question}</span>
-                </AccordionTrigger>
-                <AccordionContent className="text-base text-muted-foreground pt-4 pb-2 px-12 text-lg leading-relaxed">
+                  <h3 className="text-base font-medium text-foreground line-clamp-2">{faq.question}</h3>
+                </div>
+              </div>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out flex-grow ${activeIndex === index ? 'opacity-100' : 'opacity-0 h-0'}`}
+              >
+                <div className="px-5 py-4 text-sm text-muted-foreground">
                   {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
-  );
+ );
 };

@@ -1,11 +1,12 @@
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { ProductCategories } from "@/components/ProductCategories";
+import { GreatQualityProducts } from "@/components/GreatQualityProducts";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { TestimonialSlider } from "@/components/TestimonialSlider";
-import { QuickQuotePopup } from "@/components/QuickQuotePopup";
+import { ContactSection } from "@/components/ContactSection";
 
 const Home = () => {
   return (
@@ -13,9 +14,10 @@ const Home = () => {
       <Navigation />
       <Hero />
       <ProductCategories />
+      <GreatQualityProducts />
       <WhyChooseUs />
       <TestimonialSlider />
-      <QuickQuotePopup />
+      <ContactSection />
       <Footer />
       <WhatsAppButton />
     </div>

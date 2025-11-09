@@ -1,5 +1,4 @@
 import Home from "./Home";
-import { FAQSection } from "@/components/FAQSection";
 import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
@@ -78,7 +77,6 @@ const Index = () => {
         </script>
       </Helmet>
       <Home />
-      <FAQSection />
     </>
   );
 };
