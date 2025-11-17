@@ -19,8 +19,8 @@ export const Navigation = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
@@ -34,17 +34,24 @@ export const Navigation = () => {
   ];
 
   return (
-    <nav className={`sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b transition-all duration-300 ${
-      scrolled ? 'border-border shadow-md py-2' : 'border-transparent py-3'
-    }`}>
+    <nav
+      className={`sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b transition-all duration-300 ${
+        scrolled
+          ? "border-border shadow-md py-1.5"
+          : "border-transparent py-2.5"
+      }`}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14 md:h-16">
+        <div className="flex items-center justify-between h-12 md:h-14">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 transition-transform hover:scale-105 duration-300">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 transition-transform hover:scale-105 duration-300"
+          >
             <motion.img
               src={logo}
               alt="Sakthi Agro"
-              className="h-10 md:h-12 w-auto"
+              className="h-9 md:h-11 w-auto"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
@@ -52,12 +59,12 @@ export const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-foreground hover:text-[#FF6F00] font-medium transition-all duration-300 relative group"
+                className="text-foreground hover:text-[#FF6F0] font-medium transition-all duration-300 relative group text-sm lg:text-base"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6F00] transition-all duration-300 group-hover:w-full"></span>
@@ -66,10 +73,18 @@ export const Navigation = () => {
           </div>
 
           {/* Language Toggle and CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
             <LanguageToggle />
-            <Button variant="default" size="sm" asChild className="relative overflow-hidden group bg-[#2E7D32] hover:bg-[#1B5E20] transition-colors duration-300">
-              <a href="tel:+919443600205" className="flex items-center gap-2 transform transition-transform group-hover:-translate-y-1 duration-300">
+            <Button
+              variant="default"
+              size="sm"
+              asChild
+              className="relative overflow-hidden group bg-[#2E7D32] hover:bg-[#1B5E20] transition-colors duration-300 text-sm"
+            >
+              <a
+                href="tel:+919443600205"
+                className="flex items-center gap-2 transform transition-transform group-hover:-translate-y-1 duration-300"
+              >
                 <Phone className="h-4 w-4" />
                 Call Now
               </a>
@@ -92,22 +107,30 @@ export const Navigation = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-4 pb-6">
+          <div className="md:hidden py-4 space-y-3 pb-6">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className="block py-3 text-foreground hover:text-[#FF6F00] font-medium transition-colors relative group"
+                className="block py-2.5 text-foreground hover:text-[#FF6F00] font-medium transition-colors relative group text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6F00] transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-            <div className="flex flex-col space-y-3 pt-2 border-t border-gray-200">
+            <div className="flex flex-col space-y-3 pt-3 border-t border-gray-200">
               <LanguageToggle />
-              <Button variant="default" size="lg" className="w-full bg-[#2E7D32] hover:bg-[#1B5E20]" asChild>
-                <a href="tel:+919443600205" className="flex items-center justify-center gap-2">
+              <Button
+                variant="default"
+                size="default"
+                className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-sm"
+                asChild
+              >
+                <a
+                  href="tel:+919443600205"
+                  className="flex items-center justify-center gap-2"
+                >
                   <Phone className="h-4 w-4" />
                   Call Now
                 </a>

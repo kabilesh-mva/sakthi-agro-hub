@@ -10,20 +10,26 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 221 83% 53%;
+    --primary: 30 80% 30%; /* #1E7A3C - brand green */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
+    --accent: 43 100% 50%; /* #F3B500 - brand yellow */
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
+    --border: 142 10% 93%; /* #E6EDE6 - light green border */
     --input: 240 5.9% 90%;
-    --ring: 221 83% 53%;
+    --ring: 30 80% 30%; /* #1E7A3C - brand green */
     --radius: 0.5rem;
+    --brand-green: 30 60% 30%; /* #1E7A3C */
+    --brand-green-dark: 140 75% 19%; /* #0E5322 */
+    --brand-yellow: 43 100% 50%; /* #F3B500 */
+    --brand-gray: 0 0% 23%; /* #3B3B3B */
+    --brand-gray-light: 210 15% 46%; /* #6B7280 */
+    --brand-bg-light: 140 30% 96%; /* #F1F8F3 */
   }
 
   .dark {
@@ -33,19 +39,25 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
+    --primary: 140 75% 19%; /* #0E5322 - dark green in dark mode */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+    --accent: 43 100% 50%; /* #F3B500 - brand yellow */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 217 91% 60%;
+    --ring: 140 75% 19%; /* #0E5322 - dark green in dark mode */
+    --brand-green: 30 60% 30%; /* #1E7A3C */
+    --brand-green-dark: 140 75% 19%; /* #0E5322 */
+    --brand-yellow: 43 100% 50%; /* #F3B500 */
+    --brand-gray: 0 0% 100%; /* White in dark mode */
+    --brand-gray-light: 210 15% 80%; /* Lighter gray in dark mode */
+    --brand-bg-light: 140 20% 15%; /* Darker green background in dark mode */
   }
 }
 
@@ -64,7 +76,7 @@
     background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 10% 50%;
   }
   100% {
     background-position: 0% 50%;
@@ -78,7 +90,7 @@
 /* Floating animation for background elements */
 @keyframes float {
   0%,
-  100% {
+  10% {
     transform: translateY(0);
   }
   50% {
@@ -98,4 +110,40 @@
 .animate-float-delayed-2 {
   animation: float 8s ease-in-out infinite;
   animation-delay: 2s;
+}
+
+/* Critical CSS for Hero section */
+.hero-container {
+  background: #0a3d1a; /* Current green background */
+  overflow: hidden;
+}
+
+.network-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Critical for mobile responsiveness */
+}
+
+.stat-card {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Performance optimization for animations */
+@media (prefers-reduced-motion: reduce) {
+  .network-overlay,
+  .stat-card {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Network-aware animation adjustments */
+@media (max-width: 375px) {
+  .stat-card {
+    transition: none; /* Skip animations on very small screens */
+  }
 }

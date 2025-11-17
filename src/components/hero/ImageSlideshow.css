@@ -1,0 +1,40 @@
+/* Image Slideshow Component Styles */
+.image-slideshow-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.image-slideshow-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1000ms ease-in-out;
+}
+
+.image-slideshow-bg.active {
+  opacity: 1;
+}
+
+.image-slideshow-bg.inactive {
+  opacity: 0;
+}
+
+/* Atmospheric layers */
+.mist-layer-gradient {
+  z-index: 10;
+  pointer-events: none;
+}
+
+.foreground-darkening-gradient {
+  z-index: 20;
+  pointer-events: none;
+}
+
+.light-rays-gradient {
+  z-index: 15;
+  pointer-events: none;
+}

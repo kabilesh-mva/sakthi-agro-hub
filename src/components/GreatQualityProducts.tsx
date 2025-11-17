@@ -7,17 +7,20 @@ export const GreatQualityProducts = () => {
     {
       icon: Shield,
       title: "Quality Assured",
-      description: "Every product undergoes rigorous quality testing before delivery",
+      description:
+        "Every product undergoes rigorous quality testing before delivery",
     },
     {
       icon: Package,
       title: "Genuine Parts",
-      description: "Only authentic and genuine spare parts from trusted manufacturers",
+      description:
+        "Only authentic and genuine spare parts from trusted manufacturers",
     },
     {
       icon: CheckCircle,
       title: "Certified Standards",
-      description: "All products meet international quality and safety standards",
+      description:
+        "All products meet international quality and safety standards",
     },
     {
       icon: Star,
@@ -40,7 +43,8 @@ export const GreatQualityProducts = () => {
             Great Quality Products
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            We ensure the highest quality standards for all our agricultural products and equipment
+            We ensure the highest quality standards for all our agricultural
+            products and equipment
           </p>
         </motion.div>
 
@@ -49,21 +53,19 @@ export const GreatQualityProducts = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10"
         >
           {qualityFeatures.map((feature, index) => (
             <div key={index} className="group relative overflow-visible">
-              <Card 
-                className="rounded-2xl shadow-md transition-all duration-300 cursor-pointer h-full flex-col border-2 border-[#2E7D32] hover:shadow-lg hover:shadow-[#2E7D32]/40 hover:border-[#1B5E20] relative hover:z-10 origin-center transform hover:translateY(-6px)"
-              >
-                <CardContent className="p-6 flex flex-col items-center text-center flex-grow relative overflow-visible transition-transform duration-300 group-hover:scale-104">
-                  <div className="p-4 bg-[#E8F5E9] rounded-full group-hover:bg-[#2E7D32] transition-colors duration-300 mb-4 relative z-10 flex items-center justify-center">
-                    <feature.icon className="h-10 w-10 text-[#2E7D32] group-hover:text-white transition-colors duration-300" />
+              <Card className="rounded-2xl shadow-md transition-all duration-300 cursor-pointer h-full flex-col border-2 border-[#2E7D32] hover:shadow-lg hover:shadow-[#2E7D32]/40 hover:border-[#1B5E20] relative hover:z-10 origin-center transform hover:translateY(-6px)">
+                <CardContent className="p-4 sm:p-5 md:p-6 flex-col items-center text-center flex-grow relative overflow-visible transition-transform duration-300 group-hover:scale-104">
+                  <div className="p-3 sm:p-4 bg-[#E8F5E9] rounded-full group-hover:bg-[#2E7D32] transition-colors duration-300 mb-3 sm:mb-4 relative z-10 flex items-center justify-center">
+                    <feature.icon className="h-8 sm:h-10 w-8 sm:w-10 text-[#2E7D32] group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-[#2E7D32] transition-colors duration-300">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-[#2E7D32] transition-colors duration-300 text-center">
                     {feature.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-0 flex-grow group-hover:text-[#2E7D32] transition-colors duration-300 text-center">
+                  <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-0 flex-grow group-hover:text-[#2E7D32] transition-colors duration-300 text-center">
                     {feature.description}
                   </p>
                 </CardContent>
@@ -79,37 +81,43 @@ export const GreatQualityProducts = () => {
           viewport={{ once: true }}
           className="bg-white rounded-2xl shadow-lg p-8 border border-[#2E7D32]/20"
         >
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1 text-center md:text-left">
-              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
+          <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+            <div className="flex-1 text-center md:text-left w-full">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-3">
                 Our Commitment to Quality
               </h3>
-              <p className="text-base text-muted-foreground mb-4">
-                At Sakthi Agro, we believe that quality is the foundation of trust. Every product we offer 
-                is carefully selected and tested to ensure it meets the highest standards of performance, 
-                durability, and safety. Our commitment to quality ensures that farmers get reliable 
-                equipment that enhances productivity and reduces downtime.
+              <p className="text-sm md:text-base text-muted-foreground mb-4">
+                At Sakthi Agro, we believe that quality is the foundation of
+                trust. Every product we offer is carefully selected and tested
+                to ensure it meets the highest standards of performance,
+                durability, and safety. Our commitment to quality ensures that
+                farmers get reliable equipment that enhances productivity and
+                reduces downtime.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-sm">100% Authentic Products</span>
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                  <span className="text-xs sm:text-sm">
+                    100% Authentic Products
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-sm">Warranty Protection</span>
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                  <span className="text-xs sm:text-sm">
+                    Warranty Protection
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-sm">Expert Support</span>
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                  <span className="text-xs sm:text-sm">Expert Support</span>
                 </div>
               </div>
             </div>
-            <div className="flex-1 flex justify-center">
-              <img 
-                src="/src/assets/Sakthi agro logo1.png" 
-                alt="Sakthi Agro Quality Products" 
-                className="max-w-full h-auto rounded-lg shadow-md w-64"
+            <div className="flex-1 flex justify-center w-full max-w-xs">
+              <img
+                src="/src/assets/Sakthi agro logo1.png"
+                alt="Sakthi Agro Quality Products"
+                className="max-w-full h-auto rounded-lg shadow-md w-48 sm:w-64"
               />
             </div>
           </div>

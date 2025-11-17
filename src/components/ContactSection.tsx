@@ -24,14 +24,12 @@ export const ContactSection = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from("inquiries")
-        .insert({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        });
+      const { error } = await supabase.from("inquiries").insert({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
 
       if (error) throw error;
 
@@ -55,11 +53,14 @@ export const ContactSection = () => {
     <section className="py-12 sm:py-16 bg-[#E8F5E9] relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5 z-0">
-        <div className="absolute top-0 left-0 w-full h-full" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232E7D32' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}></div>
+        <div
+          className="absolute top-0 left-0 w-full h-full"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232E7D32' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        ></div>
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10 max-w-6xl">
         <motion.div
           className="text-center mb-8 sm:mb-12 relative z-20"
@@ -75,9 +76,9 @@ export const ContactSection = () => {
             Send us an inquiry or reach out via phone or WhatsApp
           </p>
         </motion.div>
-        
+
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 max-w-6xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -111,14 +112,20 @@ export const ContactSection = () => {
               viewport={{ once: true }}
             >
               <Card className="h-full flex flex-col">
-                <CardContent className="p-6 sm:p-8 flex-grow flex flex-col">
-                  <form onSubmit={handleSubmit} className="space-y-4 flex-grow flex flex-col">
+                <CardContent className="p-4 sm:p-6 md:p-8 flex-grow flex flex-col">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="space-y-3 sm:space-y-4 flex-grow flex flex-col"
+                  >
                     <div>
                       <Input
                         placeholder="Your Name"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                         required
+                        className="text-sm sm:text-base"
                       />
                     </div>
                     <div>
@@ -126,8 +133,11 @@ export const ContactSection = () => {
                         type="email"
                         placeholder="Email Address"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                         required
+                        className="text-sm sm:text-base"
                       />
                     </div>
                     <div>
@@ -135,8 +145,11 @@ export const ContactSection = () => {
                         type="tel"
                         placeholder="Phone Number"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, phone: e.target.value })
+                        }
                         required
+                        className="text-sm sm:text-base"
                       />
                     </div>
                     <div className="flex-grow">
@@ -144,12 +157,19 @@ export const ContactSection = () => {
                         placeholder="Your Message"
                         rows={4}
                         value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, message: e.target.value })
+                        }
                         required
-                        className="h-full min-h-[120px]"
+                        className="h-full min-h-[100px] sm:min-h-[120px] text-sm sm:text-base"
                       />
                     </div>
-                    <Button type="submit" size="lg" className="w-full mt-auto" disabled={loading}>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full mt-auto text-sm sm:text-base"
+                      disabled={loading}
+                    >
                       {loading ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -185,9 +205,14 @@ export const ContactSection = () => {
             >
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.411436852982!2d76.96285687504522!3d11.007725389155468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8597b1fcfe0b3%3A0x640b518711d823a1!2sSakthi%20agro!5e0!3m2!1sen!2sin!4v1762419961612!5m2!1sen!2sin"
-                width="100%"
+                width="10%"
                 height="100%"
-                style={{ border: 0, minHeight: '320px', maxHeight: '500px' }}
+                style={{
+                  border: 0,
+                  minHeight: "250px",
+                  maxHeight: "400px",
+                  width: "100%",
+                }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -197,7 +222,6 @@ export const ContactSection = () => {
           </div>
         </motion.div>
       </div>
-      
     </section>
   );
 };

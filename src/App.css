@@ -1,12 +1,12 @@
 /* Sakthi Agro Brand Styles */
 :root {
-  --brand-primary-green: #2E7D32;
-  --brand-primary-dark-green: #1B5E20;
-  --brand-accent-orange: #FF6F00;
-  --brand-accent-dark-orange: #E65100;
-  --brand-light-green: #E8F5E9;
-  --brand-dark-gray: #3333;
- --brand-white: #FFFFFF;
+  --brand-primary-green: #2e7d32;
+  --brand-primary-dark-green: #1b5e20;
+  --brand-accent-orange: #ff6f00;
+  --brand-accent-dark-orange: #e65100; /* Fixed the missing digit */
+  --brand-light-green: #e8f5e9;
+  --brand-dark-gray: #333; /* Fixed the incomplete hex code */
+  --brand-white: #ffffff;
 }
 
 #root {
@@ -26,7 +26,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
- background: var(--brand-primary-green);
+  background: var(--brand-primary-green);
   border-radius: 4px;
 }
 
@@ -55,7 +55,7 @@ textarea:focus {
 }
 
 .gear-spin {
- animation: gearSpin 2s linear infinite;
+  animation: gearSpin 2s linear infinite;
 }
 
 /* Shield reveal animation */
@@ -74,17 +74,37 @@ textarea:focus {
   animation: shieldReveal 0.5s ease-out;
 }
 
+/* Pulse animation for WhatsApp button */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s infinite;
+}
+
 .logo {
   height: 6em;
- padding: 1.5em;
- will-change: filter;
+  padding: 1.5em;
+  will-change: filter;
   transition: filter 300ms;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {

@@ -10,7 +10,7 @@ import { ContactSection } from "@/components/ContactSection";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background w-full overflow-x-hidden">
       <Navigation />
       <Hero />
       <ProductCategories />
@@ -21,7 +21,7 @@ const Home = () => {
       <Footer />
       <WhatsAppButton />
     </div>
- );
+  );
 };
 
 export default Home;
