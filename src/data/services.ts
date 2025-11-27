@@ -1,4 +1,4 @@
-import { Wrench, Shield, Package, Clock } from "lucide-react";
+import { Wrench, Shield, Package, Clock, Phone } from "lucide-react";
 import { Service } from "@/types/service";
 
 export const servicesData: Service[] = [
@@ -6,7 +6,8 @@ export const servicesData: Service[] = [
     id: "repair-maintenance",
     icon: Wrench,
     title: "Repair & Maintenance",
-    description: "Expert repair services for all types of agricultural equipment and machinery",
+    description:
+      "Expert repair services for all types of agricultural equipment and machinery",
     features: [
       { id: "on-site-workshop", text: "On-site and workshop repairs" },
       { id: "skilled-tech", text: "Skilled technicians" },
@@ -18,7 +19,8 @@ export const servicesData: Service[] = [
     id: "warranty-support",
     icon: Shield,
     title: "Warranty Support",
-    description: "Comprehensive warranty coverage on all products with dedicated support",
+    description:
+      "Comprehensive warranty coverage on all products with dedicated support",
     features: [
       { id: "manufacturer-warranty", text: "Manufacturer warranty" },
       { id: "extended-warranty", text: "Extended warranty options" },
@@ -42,12 +44,29 @@ export const servicesData: Service[] = [
     id: "annual-maintenance",
     icon: Clock,
     title: "Annual Maintenance",
-    description: "Regular servicing contracts to keep your equipment running smoothly",
+    description:
+      "Regular servicing contracts to keep your equipment running smoothly",
     features: [
       { id: "scheduled-maintenance", text: "Scheduled maintenance" },
       { id: "priority-service", text: "Priority service" },
       { id: "cost-effective", text: "Cost-effective plans" },
       { id: "performance-optimization", text: "Performance optimization" },
+    ],
+  },
+  {
+    id: "field-support",
+    icon: Phone,
+    title: "24/7 Field Support",
+    description:
+      "Round-the-clock support for field operations and equipment issues",
+    features: [
+      { id: "always-available", text: "Available 24/7 for emergency support" },
+      { id: "field-experts", text: "Experienced field technicians" },
+      { id: "quick-response", text: "Rapid response to field emergencies" },
+      {
+        id: "equipment-troubleshooting",
+        text: "On-site equipment troubleshooting",
+      },
     ],
   },
 ];

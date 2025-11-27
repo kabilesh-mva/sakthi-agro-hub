@@ -1,11 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Mail, Phone, Calendar } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Inquiry {
   id: string;
@@ -24,11 +30,7 @@ export const InquiryManagement = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchInquiries();
-  }, []);
-
-  const fetchInquiries = async () => {
+  const fetchInquiries = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("inquiries")
@@ -37,16 +39,21 @@ export const InquiryManagement = () => {
 
       if (error) throw error;
       setInquiries(data || []);
-    } catch (error: any) {
+    } catch (error) {
+      console.error("Error fetching inquiries:", error);
       toast({
         title: "Error",
-        description: "Failed to load inquiries",
+        description: (error as Error).message || "Failed to load inquiries",
         variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchInquiries();
+  }, [fetchInquiries]);
 
   const updateStatus = async (id: string, status: string) => {
     try {
@@ -56,17 +63,17 @@ export const InquiryManagement = () => {
         .eq("id", id);
 
       if (error) throw error;
-      
+
       toast({
         title: "Success",
         description: "Inquiry status updated",
       });
-      
+
       fetchInquiries();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: (error as Error).message,
         variant: "destructive",
       });
     }
@@ -110,25 +117,34 @@ export const InquiryManagement = () => {
                   <div className="flex flex-col gap-1 mt-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Mail className="h-4 w-4" />
-                      <a href={`mailto:${inquiry.email}`} className="hover:text-primary">
+                      <a
+                        href={`mailto:${inquiry.email}`}
+                        className="hover:text-primary"
+                      >
                         {inquiry.email}
                       </a>
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4" />
-                      <a href={`tel:${inquiry.phone}`} className="hover:text-primary">
+                      <a
+                        href={`tel:${inquiry.phone}`}
+                        className="hover:text-primary"
+                      >
                         {inquiry.phone}
                       </a>
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      {new Date(inquiry.created_at).toLocaleDateString("en-IN", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {new Date(inquiry.created_at).toLocaleDateString(
+                        "en-IN",
+                        {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
                     </div>
                   </div>
                 </div>

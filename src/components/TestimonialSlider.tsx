@@ -64,7 +64,7 @@ const CarouselIndicators = ({
   currentIndex: number;
 }) => {
   return (
-    <div className="flex justify-center space-x-2 mt-6">
+    <div className="flex justify-center space-x-2 mt-6 mb-4">
       {Array.from({ length: count }).map((_, index) => (
         <button
           key={index}
@@ -82,7 +82,7 @@ export const TestimonialSlider = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto py-12 sm:py-16">
       <Carousel
         opts={{
           align: "start",
@@ -151,10 +151,12 @@ export const TestimonialSlider = () => {
         <CarouselPrevious className="absolute -left-14 top-1/2 -translate-y-1/2 z-10" />
         <CarouselNext className="absolute -right-14 top-1/2 -translate-y-1/2 z-10" />
       </Carousel>
-      <CarouselIndicators
-        count={testimonials.length}
-        currentIndex={currentIndex}
-      />
+      <div className="mt-8">
+        <CarouselIndicators
+          count={testimonials.length}
+          currentIndex={currentIndex}
+        />
+      </div>
     </div>
   );
 };

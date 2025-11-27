@@ -1,5 +1,5 @@
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
+import PremiumHero from "@/components/PremiumHero";
 import { ProductCategories } from "@/components/ProductCategories";
 import { GreatQualityProducts } from "@/components/GreatQualityProducts";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background w-full overflow-x-hidden">
       <Navigation />
-      <Hero />
+      <PremiumHero />
       <ProductCategories />
       <GreatQualityProducts />
       <WhyChooseUs />

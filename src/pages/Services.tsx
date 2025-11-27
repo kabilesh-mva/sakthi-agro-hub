@@ -7,7 +7,6 @@ import { InView } from "@/components/ui/in-view";
 import { servicesData } from "@/data/services";
 import { Service } from "@/types/service";
 import { ServiceIcon } from "@/components/ServiceIcons";
-import VanillaTilt from "vanilla-tilt";
 import { useEffect } from "react";
 
 // Pre-define the SVG pattern to avoid inline construction
@@ -29,42 +28,6 @@ const Services = () => {
         return "repair";
     }
   };
-
-  useEffect(() => {
-    // Initialize VanillaTilt on service cards after component mounts
-    const initializeTilt = () => {
-      const cards = document.querySelectorAll(
-        ".service-card"
-      ) as NodeListOf<HTMLElement>;
-      if (cards.length > 0) {
-        const cardArray = Array.from(cards);
-        VanillaTilt.init(cardArray, {
-          max: 10,
-          speed: 400,
-          glare: true,
-          "max-glare": 0.2,
-          scale: 1.02,
-          perspective: 1000,
-        });
-
-        // Cleanup on unmount
-        return () => {
-          cardArray.forEach((card) => {
-            if ((card as any).vanillaTilt) {
-              (card as any).vanillaTilt.destroy();
-            }
-          });
-        };
-      }
-    };
-
-    // Use setTimeout to ensure DOM is fully rendered
-    const timer = setTimeout(initializeTilt, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">

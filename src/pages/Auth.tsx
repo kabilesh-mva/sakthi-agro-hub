@@ -22,7 +22,9 @@ const Auth = () => {
   useEffect(() => {
     // Check if user is already logged in
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
         navigate("/admin");
       }
@@ -30,7 +32,9 @@ const Auth = () => {
     checkSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       if (session && event === "SIGNED_IN") {
         navigate("/admin");
       }
@@ -86,7 +90,8 @@ const Auth = () => {
           if (error.message.includes("already registered")) {
             toast({
               title: "Signup Failed",
-              description: "This email is already registered. Please login instead.",
+              description:
+                "This email is already registered. Please login instead.",
               variant: "destructive",
             });
           } else {
@@ -103,10 +108,10 @@ const Auth = () => {
           });
         }
       }
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Error",
-        description: error.message || "An unexpected error occurred",
+        description: (error as Error).message || "An unexpected error occurred",
         variant: "destructive",
       });
     } finally {
@@ -117,7 +122,7 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       <div className="flex-1 flex items-center justify-center py-12 px-4">
         <Card className="w-full max-w-md">
           <CardHeader>
@@ -140,7 +145,7 @@ const Auth = () => {
                   />
                 </div>
               )}
-              
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -152,7 +157,7 @@ const Auth = () => {
                   required
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input

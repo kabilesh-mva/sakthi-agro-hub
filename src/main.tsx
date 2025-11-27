@@ -6,6 +6,24 @@ import "./index.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+// Toolbar for development mode (to enable: run 'npm install @21st-extension/toolbar' or 'bun install @21st-extension/toolbar')
+// Uncomment the following code when the package is installed to enable the toolbar in development mode
+/*
+import { initToolbar } from "@21st-extension/toolbar";
+
+const stagewiseConfig = {
+  plugins: [],
+};
+
+function setupStagewise() {
+  if (process.env.NODE_ENV === "development") {
+    initToolbar(stagewiseConfig);
+  }
+}
+
+setupStagewise();
+*/
+
 // Initialize AOS when the app starts
 AOS.init({
   duration: 1000,

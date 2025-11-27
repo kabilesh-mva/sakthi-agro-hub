@@ -1,15 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit, Trash2, Loader2 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface Product {
   id: string;
@@ -46,11 +64,7 @@ export const ProductManagement = () => {
   });
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("products")
@@ -59,20 +73,25 @@ export const ProductManagement = () => {
 
       if (error) throw error;
       setProducts(data || []);
-    } catch (error: any) {
+    } catch (error) {
+      console.error("Error fetching products:", error);
       toast({
         title: "Error",
-        description: "Failed to load products",
+        description: (error as Error).message || "Failed to load products",
         variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const productData = {
         name: formData.name,
@@ -91,11 +110,12 @@ export const ProductManagement = () => {
           .eq("id", editingProduct.id);
 
         if (error) throw error;
-        toast({ title: "Success", description: "Product updated successfully" });
+        toast({
+          title: "Success",
+          description: "Product updated successfully",
+        });
       } else {
-        const { error } = await supabase
-          .from("products")
-          .insert(productData);
+        const { error } = await supabase.from("products").insert(productData);
 
         if (error) throw error;
         toast({ title: "Success", description: "Product added successfully" });
@@ -104,10 +124,10 @@ export const ProductManagement = () => {
       setDialogOpen(false);
       resetForm();
       fetchProducts();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: (error as Error).message,
         variant: "destructive",
       });
     }
@@ -131,18 +151,15 @@ export const ProductManagement = () => {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const { error } = await supabase
-        .from("products")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from("products").delete().eq("id", id);
 
       if (error) throw error;
       toast({ title: "Success", description: "Product deleted successfully" });
       fetchProducts();
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: (error as Error).message,
         variant: "destructive",
       });
     }
@@ -173,10 +190,13 @@ export const ProductManagement = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Product Management</h2>
-        <Dialog open={dialogOpen} onOpenChange={(open) => {
-          setDialogOpen(open);
-          if (!open) resetForm();
-        }}>
+        <Dialog
+          open={dialogOpen}
+          onOpenChange={(open) => {
+            setDialogOpen(open);
+            if (!open) resetForm();
+          }}
+        >
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
@@ -196,7 +216,9 @@ export const ProductManagement = () => {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     required
                   />
                 </div>
@@ -204,7 +226,9 @@ export const ProductManagement = () => {
                   <Label htmlFor="category">Category *</Label>
                   <Select
                     value={formData.category}
-                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, category: value })
+                    }
                     required
                   >
                     <SelectTrigger>
@@ -226,7 +250,9 @@ export const ProductManagement = () => {
                 <Textarea
                   id="description"
                   value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
                   rows={3}
                 />
               </div>
@@ -236,7 +262,9 @@ export const ProductManagement = () => {
                 <Textarea
                   id="specifications"
                   value={formData.specifications}
-                  onChange={(e) => setFormData({ ...formData, specifications: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, specifications: e.target.value })
+                  }
                   rows={2}
                 />
               </div>
@@ -249,7 +277,9 @@ export const ProductManagement = () => {
                     type="number"
                     step="0.01"
                     value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, price: e.target.value })
+                    }
                   />
                 </div>
                 <div className="space-y-2">
@@ -258,7 +288,9 @@ export const ProductManagement = () => {
                     id="image_url"
                     type="url"
                     value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, image_url: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -267,7 +299,9 @@ export const ProductManagement = () => {
                 <Switch
                   id="in_stock"
                   checked={formData.in_stock}
-                  onCheckedChange={(checked) => setFormData({ ...formData, in_stock: checked })}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, in_stock: checked })
+                  }
                 />
                 <Label htmlFor="in_stock">In Stock</Label>
               </div>
@@ -297,17 +331,26 @@ export const ProductManagement = () => {
           <Card key={product.id}>
             <CardHeader>
               <CardTitle className="text-lg">{product.name}</CardTitle>
-              <p className="text-sm text-muted-foreground">{product.category}</p>
+              <p className="text-sm text-muted-foreground">
+                {product.category}
+              </p>
             </CardHeader>
             <CardContent>
               {product.description && (
                 <p className="text-sm mb-2">{product.description}</p>
               )}
               {product.price && (
-                <p className="text-lg font-bold text-primary">₹{product.price}</p>
+                <p className="text-lg font-bold text-primary">
+                  ₹{product.price}
+                </p>
               )}
               <p className="text-sm mt-2">
-                Status: <span className={product.in_stock ? "text-green-600" : "text-red-600"}>
+                Status:{" "}
+                <span
+                  className={
+                    product.in_stock ? "text-green-600" : "text-red-600"
+                  }
+                >
                   {product.in_stock ? "In Stock" : "Out of Stock"}
                 </span>
               </p>

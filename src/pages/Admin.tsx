@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -14,14 +14,12 @@ const Admin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  useEffect(() => {
-    checkAdminAccess();
-  }, []);
-
-  const checkAdminAccess = async () => {
+  const checkAdminAccess = useCallback(async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session) {
         navigate("/auth");
         return;
@@ -52,7 +50,11 @@ const Admin = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate, toast]);
+
+  useEffect(() => {
+    checkAdminAccess();
+  }, [checkAdminAccess]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -81,7 +83,9 @@ const Admin = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Admin Panel</h1>
-            <p className="text-sm text-muted-foreground">Sakthi Agro Management</p>
+            <p className="text-sm text-muted-foreground">
+              Sakthi Agro Management
+            </p>
           </div>
           <Button variant="outline" onClick={handleLogout}>
             <LogOut className="mr-2 h-4 w-4" />
@@ -96,11 +100,11 @@ const Admin = () => {
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="products" className="mt-6">
             <ProductManagement />
           </TabsContent>
-          
+
           <TabsContent value="inquiries" className="mt-6">
             <InquiryManagement />
           </TabsContent>

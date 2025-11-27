@@ -2,36 +2,55 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Quote, Phone, User, Package } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Quote, Phone, User, Package, Loader2 } from "lucide-react";
 
 export const QuickQuotePopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    message: ""
+    message: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real implementation, this would send the data to the backend
-    console.log("Quote request submitted:", formData);
-    setIsOpen(false);
-    setFormData({ name: "", phone: "", message: "" });
-    // Show success message or redirect to WhatsApp
-    window.open(`https://wa.me/91944360205?text=Hello! I'm interested in your products. My name is ${formData.name} and my phone number is ${formData.phone}. ${formData.message}`, '_blank');
+    setLoading(true);
+
+    // Small delay to show loading state before redirecting
+    setTimeout(() => {
+      setLoading(false);
+      setIsOpen(false);
+      setFormData({ name: "", phone: "", message: "" });
+      // Redirect to WhatsApp with pre-filled message
+      window.open(
+        `https://wa.me/919443600205?text=Hello! I'm interested in your products. My name is ${formData.name} and my phone number is ${formData.phone}. ${formData.message}`,
+        "_blank"
+      );
+    }, 500);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="fixed bottom-24 right-6 z-50 bg-[#FF6F00] hover:bg-[#E65100] text-white shadow-lg rounded-full px-4 py-2 flex items-center gap-2 sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden" size="sm">
+        <Button
+          className="fixed bottom-24 right-6 z-50 bg-[#FF6F00] hover:bg-[#E65100] text-white shadow-lg rounded-full px-4 py-2 flex items-center gap-2 sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden"
+          size="sm"
+        >
           <Quote className="h-4 w-4" />
           <span className="hidden sm:inline">Get Quote</span>
           <span className="sm:hidden">Quote</span>
@@ -46,7 +65,12 @@ export const QuickQuotePopup = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium text-foreground">Name</label>
+            <label
+              htmlFor="name"
+              className="text-sm font-medium text-foreground"
+            >
+              Name
+            </label>
             <div className="relative">
               <User className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
               <Input
@@ -61,7 +85,12 @@ export const QuickQuotePopup = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium text-foreground">Phone</label>
+            <label
+              htmlFor="phone"
+              className="text-sm font-medium text-foreground"
+            >
+              Phone
+            </label>
             <div className="relative">
               <Phone className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
               <Input
@@ -76,7 +105,12 @@ export const QuickQuotePopup = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <label htmlFor="message" className="text-sm font-medium text-foreground">Message</label>
+            <label
+              htmlFor="message"
+              className="text-sm font-medium text-foreground"
+            >
+              Message
+            </label>
             <div className="relative">
               <Package className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
               <Textarea
@@ -89,7 +123,20 @@ export const QuickQuotePopup = () => {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white mt-4">Send Quote Request</Button>
+          <Button
+            type="submit"
+            className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white mt-4"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Sending...
+              </>
+            ) : (
+              "Send Quote Request"
+            )}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

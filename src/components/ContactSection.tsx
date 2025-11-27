@@ -38,7 +38,7 @@ export const ContactSection = () => {
         description: "We'll get back to you shortly.",
       });
       setFormData({ name: "", email: "", phone: "", message: "" });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",

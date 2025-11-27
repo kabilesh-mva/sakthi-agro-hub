@@ -1,14 +1,3 @@
-/* Sakthi Agro Brand Styles */
-:root {
-  --brand-primary-green: #2e7d32;
-  --brand-primary-dark-green: #1b5e20;
-  --brand-accent-orange: #ff6f00;
-  --brand-accent-dark-orange: #e65100; /* Fixed the missing digit */
-  --brand-light-green: #e8f5e9;
-  --brand-dark-gray: #333; /* Fixed the incomplete hex code */
-  --brand-white: #ffffff;
-}
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -22,16 +11,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--brand-light-green);
+  background: var(--secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--brand-primary-green);
+  background: var(--primary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-accent-orange);
+  background: var(--primary);
 }
 
 /* Focus styles for accessibility */
@@ -40,7 +29,7 @@ a:focus,
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid var(--brand-accent-orange);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 

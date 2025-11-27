@@ -1,0 +1,267 @@
+/* Premium Hero Component Styles */
+
+/* Glass-morphism effect for stat cards */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0.15), 0 2px 8px rgba(255, 255, 255, 0.15),
+    inset 0 0 15px rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.05)
+  );
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stat-card::backdrop {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.stat-card-inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Enhanced hover effects for more depth */
+.stat-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(255, 255, 255, 0.2), inset 0 20px rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* Additional depth effect for the content inside */
+.stat-card-content {
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translateX(-100%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100%);
+  }
+}
+
+/* Enhanced button styles */
+.whatsapp-emergency-button {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.whatsapp-emergency-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+  z-index: -1;
+}
+
+.whatsapp-emergency-button:hover::before {
+  left: 100%;
+}
+
+/* Background effects */
+.hero-background-image {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  transition: opacity 1.5s ease-in-out;
+}
+
+/* Cinematic light rays animation */
+.light-ray {
+  animation: lightRay 4s ease-in-out infinite;
+}
+
+@keyframes lightRay {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Number pulse animation for stats */
+.stat-value-text {
+  animation: numberPulse 2s infinite;
+}
+
+@keyframes numberPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Custom animation for text elements */
+.text-fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle particle animation for background */
+.background-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.background-particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: float 15s infinite linear;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+.stat-card:focus-within,
+.whatsapp-emergency-button:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* WhatsApp icon pulse animation (every 6 seconds) */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s infinite;
+}
+
+/* Ripple effect for CTA button */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(25, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Dynamic animations for "Agriculture" text */
+
+/* Gradient Reveal Animation */
+.agriculture-highlight {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(180deg, #f9a300 0%, #ff6f00 100%);
+  background-size: 100% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientReveal 2s ease-out forwards,
+    sunlightReflection 8s ease-in-out infinite 2s;
+}
+
+@keyframes gradientReveal {
+  0% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Sunlight Reflection Animation */
+@keyframes sunlightReflection {
+  0%,
+  10% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+    text-shadow: 0 0 8px rgba(249, 163, 0, 0.5);
+  }
+}

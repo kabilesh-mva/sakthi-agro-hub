@@ -1,371 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import lottie from "lottie-web";
-
-// Animation data for each service
-const repairAnimation = {
-  v: "5.5.7",
-  fr: 29.9700393676758,
-  ip: 0,
-  op: 150,
-  w: 200,
-  h: 200,
-  nm: "Repair Animation",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Gear",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.67], y: [0.667] },
-              o: { x: [0.333], y: [0.333] },
-              t: 0,
-              s: [0],
-            },
-            {
-              i: { x: [0.667], y: [0.667] },
-              o: { x: [0.333], y: [0.333] },
-              t: 75,
-              s: [360],
-            },
-            { t: 150, s: [720] },
-          ],
-        },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "rc",
-              d: 1,
-              s: { a: 0, k: [100, 100] },
-              p: { a: 0, k: [0, 0] },
-              r: { a: 0, k: 10 },
-              nm: "Rectangle",
-              mn: "ADBE Vector Shape - Rect",
-              hd: false,
-            },
-            {
-              ty: "st",
-              c: { a: 0, k: [0.2, 0.6, 0.8] },
-              w: { a: 0, k: 8 },
-              lc: 2,
-              lj: 2,
-              nm: "Stroke",
-              mn: "ADBE Vector Graphic - Stroke",
-              hd: false,
-            },
-            {
-              ty: "tr",
-              p: { a: 0, k: [100, 100] },
-              a: { a: 0, k: [0, 0] },
-              s: { a: 0, k: [100, 100] },
-              r: { a: 0, k: 0 },
-              o: { a: 0, k: 100 },
-              sk: { a: 0, k: 0 },
-              sa: { a: 0, k: 0 },
-              nm: "Transform",
-            },
-          ],
-          nm: "Rectangle Group",
-          np: 2,
-          cix: 2,
-          ix: 1,
-          mn: "ADBE Vector Group",
-          hd: false,
-        },
-      ],
-      ip: 0,
-      op: 150,
-      st: 0,
-      bm: 0,
-    },
-  ],
-};
-
-const warrantyAnimation = {
-  v: "5.5.7",
-  fr: 29.9700393676758,
-  ip: 0,
-  op: 150,
-  w: 200,
-  h: 200,
-  nm: "Shield Animation",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Shield",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        s: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.667, 0.667], y: [0.667, 0.667] },
-              o: { x: [0.333, 0.333], y: [0.333, 0.333] },
-              t: 0,
-              s: [100, 100],
-            },
-            {
-              i: { x: [0.667, 0.667], y: [0.667, 0.67] },
-              o: { x: [0.333, 0.333], y: [0.333, 0.333] },
-              t: 75,
-              s: [110, 110],
-            },
-            { t: 150, s: [100, 100] },
-          ],
-        },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "el",
-              p: { a: 0, k: [0, 0] },
-              s: { a: 0, k: [60, 60] },
-              nm: "Circle",
-              mn: "ADBE Vector Shape - Ellipse",
-              hd: false,
-            },
-            {
-              ty: "st",
-              c: { a: 0, k: [0.2, 0.6, 0.8] },
-              w: { a: 0, k: 8 },
-              lc: 2,
-              lj: 2,
-              ml: { a: 0, k: 0 },
-              nm: "Stroke",
-              mn: "ADBE Vector Graphic - Stroke",
-              hd: false,
-            },
-            {
-              ty: "tr",
-              p: { a: 0, k: [100, 100] },
-              a: { a: 0, k: [0, 0] },
-              s: { a: 0, k: [100, 100] },
-              r: { a: 0, k: 0 },
-              o: { a: 0, k: 100 },
-              sk: { a: 0, k: 0 },
-              sa: { a: 0, k: 0 },
-              nm: "Transform",
-            },
-          ],
-          nm: "Circle Group",
-          np: 2,
-          cix: 2,
-          ix: 1,
-          mn: "ADBE Vector Group",
-          hd: false,
-        },
-      ],
-      ip: 0,
-      op: 150,
-      st: 0,
-      bm: 0,
-    },
-  ],
-};
-
-const partsAnimation = {
-  v: "5.5.7",
-  fr: 29.9700393676758,
-  ip: 0,
-  op: 150,
-  w: 200,
-  h: 200,
-  nm: "Parts Animation",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Box",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        p: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.667], y: [0.667] },
-              o: { x: [0.333], y: [0.333] },
-              t: 0,
-              s: [100, 120],
-            },
-            {
-              i: { x: [0.667], y: [0.667] },
-              o: { x: [0.333], y: [0.333] },
-              t: 75,
-              s: [100, 90],
-            },
-            { t: 150, s: [100, 120] },
-          ],
-        },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "rc",
-              d: 1,
-              s: { a: 0, k: [80, 60] },
-              p: { a: 0, k: [0, 0] },
-              r: { a: 0, k: 10 },
-              nm: "Rectangle",
-              mn: "ADBE Vector Shape - Rect",
-              hd: false,
-            },
-            {
-              ty: "st",
-              c: { a: 0, k: [0.2, 0.6, 0.8] },
-              w: { a: 0, k: 8 },
-              lc: 2,
-              lj: 2,
-              nm: "Stroke",
-              mn: "ADBE Vector Graphic - Stroke",
-              hd: false,
-            },
-            {
-              ty: "tr",
-              p: { a: 0, k: [100, 100] },
-              a: { a: 0, k: [0, 0] },
-              s: { a: 0, k: [100, 100] },
-              r: { a: 0, k: 0 },
-              o: { a: 0, k: 100 },
-              sk: { a: 0, k: 0 },
-              sa: { a: 0, k: 0 },
-              nm: "Transform",
-            },
-          ],
-          nm: "Rectangle Group",
-          np: 2,
-          cix: 2,
-          ix: 1,
-          mn: "ADBE Vector Group",
-          hd: false,
-        },
-      ],
-      ip: 0,
-      op: 150,
-      st: 0,
-      bm: 0,
-    },
-  ],
-};
-
-const maintenanceAnimation = {
-  v: "5.5.7",
-  fr: 29.9700393676758,
-  ip: 0,
-  op: 150,
-  w: 200,
-  h: 200,
-  nm: "Maintenance Animation",
-  ddd: 0,
-  assets: [],
-  layers: [
-    {
-      ddd: 0,
-      ind: 1,
-      ty: 4,
-      nm: "Circle",
-      sr: 1,
-      ks: {
-        o: { a: 0, k: 100 },
-        r: {
-          a: 1,
-          k: [
-            {
-              i: { x: [0.667], y: [0.667] },
-              o: { x: [0.333], y: [0.333] },
-              t: 0,
-              s: [0],
-            },
-            {
-              i: { x: [0.667], y: [0.667] },
-              o: { x: [0.333], y: [0.333] },
-              t: 75,
-              s: [360],
-            },
-            { t: 150, s: [720] },
-          ],
-        },
-      },
-      ao: 0,
-      shapes: [
-        {
-          ty: "gr",
-          it: [
-            {
-              ty: "el",
-              p: { a: 0, k: [0, 0] },
-              s: { a: 0, k: [60, 60] },
-              nm: "Circle",
-              mn: "ADBE Vector Shape - Ellipse",
-              hd: false,
-            },
-            {
-              ty: "st",
-              c: { a: 0, k: [0.2, 0.6, 0.8] },
-              w: { a: 0, k: 8 },
-              lc: 2,
-              lj: 2,
-              ml: { a: 0, k: 0 },
-              nm: "Stroke",
-              mn: "ADBE Vector Graphic - Stroke",
-              hd: false,
-            },
-            {
-              ty: "tr",
-              p: { a: 0, k: [100, 100] },
-              a: { a: 0, k: [0, 0] },
-              s: { a: 0, k: [100, 100] },
-              r: { a: 0, k: 0 },
-              o: { a: 0, k: 100 },
-              sk: { a: 0, k: 0 },
-              sa: { a: 0, k: 0 },
-              nm: "Transform",
-            },
-          ],
-          nm: "Circle Group",
-          np: 2,
-          cix: 2,
-          ix: 1,
-          mn: "ADBE Vector Group",
-          hd: false,
-        },
-      ],
-      ip: 0,
-      op: 150,
-      st: 0,
-      bm: 0,
-    },
-  ],
-};
+import React from "react";
 
 interface ServiceIconProps {
-  type: "repair" | "warranty" | "parts" | "maintenance";
+  type: "repair" | "warranty" | "parts" | "maintenance" | "field-support";
   size?: number;
 }
 
@@ -373,53 +9,93 @@ export const ServiceIcon: React.FC<ServiceIconProps> = ({
   type,
   size = 56,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    let animationData;
-    switch (type) {
-      case "repair":
-        animationData = repairAnimation;
-        break;
-      case "warranty":
-        animationData = warrantyAnimation;
-        break;
-      case "parts":
-        animationData = partsAnimation;
-        break;
-      case "maintenance":
-        animationData = maintenanceAnimation;
-        break;
-      default:
-        animationData = repairAnimation;
-    }
-
-    // Use setTimeout to ensure DOM element is rendered before initializing lottie
-    const timer = setTimeout(() => {
-      if (containerRef.current) {
-        const anim = lottie.loadAnimation({
-          container: containerRef.current,
-          renderer: "svg",
-          loop: true,
-          autoplay: true,
-          animationData: animationData,
-          rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice",
-          },
-        });
-
-        return () => {
-          anim.destroy();
-        };
-      }
-    }, 0);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [type]);
-
-  return <div ref={containerRef} style={{ width: size, height: size }} />;
+  return (
+    <div
+      style={{ width: size, height: size }}
+      className="flex items-center justify-center"
+    >
+      {type === "repair" && (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 2 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+            fill="currentColor"
+          />
+          <path
+            d="M12 6L14 10L18 12L14 14L12 18L10 14L6 12L10 10L12 6Z"
+            fill="currentColor"
+          />
+        </svg>
+      )}
+      {type === "warranty" && (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1LZM12 11.99H19C18.47 16.11 15.97 19.78 12 20.93V12H5C5.21 8.16 7.74 4.98 12 4.09V11.99Z"
+            fill="currentColor"
+          />
+        </svg>
+      )}
+      {type === "parts" && (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 6H16V4C16 2.9 15.1 2.9 14 2H10C8.9 2 8 2.9 8 4V6H4C2.9 6 2 6.9 2 8V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V8C22 6.9 21.1 6 20 6ZM10 4H14V6H10V4ZM20 18H4V8H20V18Z"
+            fill="currentColor"
+          />
+          <path
+            d="M12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z"
+            fill="currentColor"
+          />
+        </svg>
+      )}
+      {type === "maintenance" && (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 8V4L8 8H12ZM12 8L16 12L20 8H16V4L12 8ZM12 8L8 12L4 8H8V4L12 8ZM12 8L16 12L20 8H16V4L12 8ZM12 8L8 12L4 8H8V4L12 8ZM12 8L16 12L20 8H16V4L12 8Z"
+            fill="currentColor"
+          />
+          <path
+            d="M12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16Z"
+            fill="currentColor"
+          />
+        </svg>
+      )}
+      {type === "field-support" && (
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 15.5C18.8 15.5 17.65 15.3 16.59 14.93C16.22 14.8 15.83 14.89 15.56 15.16L14.5 16.22C11.87 14.9 9.1 12.13 7.78 9.5L8.84 8.44C9.11 8.17 9.2 7.78 9.07 7.41C8.7 6.35 8.5 5.2 8.5 4C8.5 3.45 8.05 3 7.5 3H4C3.45 3 3.45 3 4C3 13.39 10.61 21 20 21C20.5 21 21 20.55 21 20V16.5C21 15.95 20.55 15.5 20 15.5Z"
+            fill="currentColor"
+          />
+        </svg>
+      )}
+    </div>
+  );
 };

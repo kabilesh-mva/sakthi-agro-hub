@@ -42,13 +42,6 @@ const features = [
   },
 ];
 
-const stats = [
-  { value: "5,000+", label: "Happy Farmers Served", icon: Users },
-  { value: "98%", label: "Customer Satisfaction", icon: Star },
-  { value: "24/7", label: "Expert Support", icon: Phone },
-  { value: "10,000+", label: "Genuine Products Delivered", icon: Package },
-];
-
 export const WhyChooseUs = () => {
   return (
     <section className="py-12 sm:py-16 bg-secondary relative overflow-hidden">
@@ -63,47 +56,6 @@ export const WhyChooseUs = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Stats Section with Circular Badges */}
-        <motion.div
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8 md:mb-16 relative z-20 max-w-4xl mx-auto"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-            hidden: {},
-          }}
-        >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              className="flex flex-col items-center text-center relative z-20"
-              variants={{
-                visible: { opacity: 1, y: 0, scale: 1 },
-                hidden: { opacity: 0, y: 20, scale: 0.9 },
-              }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center p-2 sm:p-3 bg-gradient-to-br from-[#E8F5E9] to-white group hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-xl border border-[#2E7D32]/20 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#2E7D32] to-[#FF6F00] opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
-                <div className="flex flex-col items-center justify-center z-10 h-full">
-                  <stat.icon className="h-3 w-3 sm:h-4 sm:w-4 text-[#2E7D32] mb-0.5 sm:mb-1" />
-                  <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#2E7D32] mt-0.5 sm:mt-1 leading-tight">
-                    {stat.value}
-                  </div>
-                </div>
-              </div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1 sm:mt-2 px-0.5 sm:px-1">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
         <motion.div
           className="text-center mb-8 sm:mb-12 relative z-20"
           initial={{ opacity: 0, y: 20 }}

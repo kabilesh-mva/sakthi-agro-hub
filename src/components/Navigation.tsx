@@ -30,12 +30,28 @@ export const Navigation = () => {
     { to: "/services", label: "Services" },
     { to: "/gallery", label: "Gallery" },
     { to: "/contact", label: "Contact" },
-    { to: "/auth", label: "Admin" },
   ];
+
+  // Function to handle admin access via keyboard shortcut
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // ALT + A to access admin
+      if (e.altKey && e.key.toLowerCase() === "a") {
+        e.preventDefault();
+        window.location.href = "/auth";
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <nav
-      className={`sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b transition-all duration-300 ${
+      className={`sticky top-0 z-50 bg-gradient-to-br from-[#1E7A3C] to-[#0E5322] border-b transition-all duration-300 ${
         scrolled
           ? "border-border shadow-md py-1.5"
           : "border-transparent py-2.5"
@@ -64,9 +80,17 @@ export const Navigation = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-foreground hover:text-[#FF6F0] font-medium transition-all duration-300 relative group text-sm lg:text-base"
+                className="text-white font-medium transition-all duration-300 relative group text-sm lg:text-base flex"
               >
-                {link.label}
+                {link.label.split("").map((char, index) => (
+                  <span
+                    key={index}
+                    className="group-hover:text-[#FF6F00] transition-colors duration-300"
+                    style={{ transitionDelay: `${index * 30}ms` }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6F00] transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
@@ -79,7 +103,7 @@ export const Navigation = () => {
               variant="default"
               size="sm"
               asChild
-              className="relative overflow-hidden group bg-[#2E7D32] hover:bg-[#1B5E20] transition-colors duration-300 text-sm"
+              className="relative overflow-hidden group bg-white text-[#1E7A3C] hover:bg-white/90 transition-colors duration-300 text-sm font-bold"
             >
               <a
                 href="tel:+919443600205"
@@ -93,7 +117,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-full hover:bg-accent transition-colors duration-300"
+            className="md:hidden p-2 rounded-full hover:bg-white/10 text-white transition-colors duration-300"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -112,19 +136,19 @@ export const Navigation = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="block py-2.5 text-foreground hover:text-[#FF6F00] font-medium transition-colors relative group text-base"
+                className="block py-2.5 text-white hover:text-[#FF6F00] font-medium transition-colors relative group text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6F00] transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-            <div className="flex flex-col space-y-3 pt-3 border-t border-gray-200">
+            <div className="flex flex-col space-y-3 pt-3 border-t border-white/20">
               <LanguageToggle />
               <Button
                 variant="default"
                 size="default"
-                className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-sm"
+                className="w-full bg-white text-[#1E7A3C] hover:bg-white/90 text-sm font-bold"
                 asChild
               >
                 <a
