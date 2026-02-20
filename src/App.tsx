@@ -41,7 +41,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <HelmetProvider>
-        <BrowserRouter>
+        <HashRouter>
           <ScrollToTop />
           <div style={{ position: "relative" }}>
             <Suspense fallback={<PageLoader />}>
@@ -58,7 +58,7 @@ const App = () => (
               </Routes>
             </Suspense>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </HelmetProvider>
     </TooltipProvider>
   </QueryClientProvider>
