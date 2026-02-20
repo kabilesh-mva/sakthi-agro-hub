@@ -4,8 +4,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Base path for GitHub Pages - update with your repo name
-  base: "/sakthi-agro-hub/",
+  // Base path for GitHub Pages - root domain deployment
+  base: "/",
   server: {
     host: "::",
     port: 8080,
