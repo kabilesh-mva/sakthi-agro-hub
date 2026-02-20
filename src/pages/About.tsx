@@ -31,14 +31,14 @@ import { TestimonialSlider } from "@/components/TestimonialSlider";
 import MicroTrustStrip from "@/components/MicroTrustStrip";
 
 // Import the images we need
-import founderImage from "/src/assets/hero-farming.jpg";
-import shopImage from "/src/assets/hero-farming3.jpg";
-import workshopImage from "/src/assets/hero-farming4.jpg";
-import customerImage1 from "/src/assets/hero-farming.jpg";
-import customerImage2 from "/src/assets/hero-farming3.jpg";
-import teamImage1 from "/src/assets/hero-farming4.jpg";
-import teamImage2 from "/src/assets/hero-farming.jpg";
-import teamImage3 from "/src/assets/hero-farming4.jpg";
+import founderImage from "../assets/hero-farming.jpg";
+import shopImage from "../assets/hero-farming3.jpg";
+import workshopImage from "../assets/hero-farming4.jpg";
+import customerImage1 from "../assets/hero-farming.jpg";
+import customerImage2 from "../assets/hero-farming3.jpg";
+import teamImage1 from "../assets/hero-farming4.jpg";
+import teamImage2 from "../assets/hero-farming.jpg";
+import teamImage3 from "../assets/hero-farming4.jpg";
 
 const About = () => {
   const { t } = useLanguage();

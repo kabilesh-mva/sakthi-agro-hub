@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Phone, ShoppingCart, MessageCircle } from "lucide-react";
-import callousedHands from "/src/assets/calloused-hands.webp";
-import heroFarming from "/src/assets/hero-farming.jpg";
+import callousedHands from "../assets/calloused-hands.webp";
+import heroFarming from "../assets/hero-farming.jpg";
 import CountUp from "./CountUp";
 
 // Optimized audience content

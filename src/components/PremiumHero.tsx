@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { MessageCircle, Phone, ShoppingCart, User } from "lucide-react";
 
 // Import the images
-import callousedHands from "/src/assets/calloused-hands.webp";
-import heroFarming from "/src/assets/hero-farming.jpg";
-import heroFarming4 from "/src/assets/hero-farming4.jpg";
+import callousedHands from "../assets/calloused-hands.webp";
+import heroFarming from "../assets/hero-farming.jpg";
+import heroFarming4 from "../assets/hero-farming4.jpg";
 
 // Import CSS
 import "./PremiumHero.css";

@@ -31,6 +31,9 @@ export default defineConfig(({ mode }) => ({
     target: "esnext",
     minify: "esbuild",
     cssMinify: true,
+    modulePreload: {
+      polyfill: false,
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -48,6 +51,8 @@ export default defineConfig(({ mode }) => ({
     treeShake: true,
     sourcemap: mode === "development",
   },
+  // Disable automatic preload/prefetch of assets
+  appType: 'spa',
   // Optimize dependencies pre-bundling
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
