@@ -16,6 +16,9 @@ if (!SUPABASE_PUBLISHABLE_KEY) {
   throw new Error("Missing SUPABASE_PUBLISHABLE_KEY in environment variables");
 }
 
+// Log the URL for debugging
+console.log("[Supabase] Initializing with URL:", SUPABASE_URL);
+
 export const supabase = createClient<Database>(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY,
@@ -24,6 +27,18 @@ export const supabase = createClient<Database>(
       storage: localStorage,
       persistSession: true,
       autoRefreshToken: true,
+    },
+    // Add custom fetch with timeout for network issues
+    fetch: async (url, options = {}) => {
+      try {
+        return await fetch(url, {
+          ...options,
+          signal: AbortSignal.timeout(10000),
+        });
+      } catch (error) {
+        console.error("[Supabase] Fetch error:", error);
+        throw error;
+      }
     },
   }
 );

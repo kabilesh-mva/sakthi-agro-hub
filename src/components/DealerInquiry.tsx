@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { Users, Phone, User, Building } from "lucide-react";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export const DealerInquiry = () => {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -47,14 +50,14 @@ export const DealerInquiry = () => {
           size="lg"
         >
           <Users className="h-4 w-4 mr-2" />
-          Become a Dealer
+          {t("dealer_btn")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl font-bold text-[#2E7D32]">
             <Users className="h-6 w-6" />
-            Dealer Inquiry
+            {t("dealer_title")}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -63,7 +66,7 @@ export const DealerInquiry = () => {
               htmlFor="name"
               className="text-sm font-medium text-foreground"
             >
-              Your Name
+              {t("dealer_name_label")}
             </label>
             <div className="relative">
               <User className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
@@ -72,7 +75,7 @@ export const DealerInquiry = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Your Full Name"
+                placeholder={t("dealer_name_label")}
                 className="pl-10"
                 required
               />
@@ -83,7 +86,7 @@ export const DealerInquiry = () => {
               htmlFor="businessName"
               className="text-sm font-medium text-foreground"
             >
-              Business Name
+              {t("dealer_business_label")}
             </label>
             <div className="relative">
               <Building className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
@@ -92,7 +95,7 @@ export const DealerInquiry = () => {
                 name="businessName"
                 value={formData.businessName}
                 onChange={handleChange}
-                placeholder="Your Business Name"
+                placeholder={t("dealer_business_label")}
                 className="pl-10"
                 required
               />
@@ -103,7 +106,7 @@ export const DealerInquiry = () => {
               htmlFor="phone"
               className="text-sm font-medium text-foreground"
             >
-              Phone
+              {t("dealer_phone_label")}
             </label>
             <div className="relative">
               <Phone className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
@@ -112,7 +115,7 @@ export const DealerInquiry = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="Your Phone Number"
+                placeholder={t("dealer_phone_label")}
                 className="pl-10"
                 required
               />
@@ -123,7 +126,7 @@ export const DealerInquiry = () => {
               htmlFor="message"
               className="text-sm font-medium text-foreground"
             >
-              Message
+              {t("dealer_message_label")}
             </label>
             <div className="relative">
               <Users className="absolute left-3 top-3 h-4 w-4 text-[#2E7D32]/50" />
@@ -132,7 +135,7 @@ export const DealerInquiry = () => {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Tell us about your business and why you want to become a dealer"
+                placeholder={t("dealer_message_label")}
                 className="pl-10 min-h-[100px]"
               />
             </div>
@@ -141,7 +144,7 @@ export const DealerInquiry = () => {
             type="submit"
             className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white mt-4"
           >
-            Submit Inquiry
+            {t("dealer_submit_btn")}
           </Button>
         </form>
       </DialogContent>

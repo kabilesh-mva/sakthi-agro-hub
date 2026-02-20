@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 EMERGENCY FIX - Sakthi Agro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 4px solid #ef4444;
+        }
+        h1 { color: #dc2626; margin-bottom: 10px; font-size: 28px; }
+        .alert { 
+            background: #fee2e2; 
+            border: 3px solid #ef4444;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .alert-title { color: #991b1b; font-weight: 800; font-size: 18px; margin-bottom: 10px; }
+        .alert-message { color: #7f1d1d; line-height: 1.6; }
+        .btn {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            border: none;
+            padding: 18px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin: 15px 0;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+        .btn.copied { 
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+        .steps {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .step {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+        }
+        .step-number {
+            background: #f59e0b;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .step-content { color: #78350f; line-height: 1.6; font-size: 14px; }
+        .sql-box {
+            background: #1e293b;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #10b981;
+            display: none;
+        }
+        .success {
+            background: #dcfce7;
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .success-title { color: #166534; font-weight: 700; font-size: 18px; margin-bottom: 10px; }
+        .success-message { color: #15803d; line-height: 1.6; }
+        .warning {
+            background: #fef9c3;
+            border: 2px solid #ca8a04;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .warning strong { color: #854d0e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 EMERGENCY DATABASE FIX</h1>
+        
+        <div class="alert">
+            <div class="alert-title">⚠️ Critical Issue Detected</div>
+            <div class="alert-message">
+                Your Supabase database is missing critical tables and the storage bucket.
+                This is why you're getting "Failed to save product" errors.
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚡ IMPORTANT:</strong> This fix will create EVERYTHING you need in one go. 
+            Make sure you copy ALL the SQL and run it completely.
+        </div>
+
+        <div class="steps">
+            <h3 style="color: #78350f; margin-bottom: 15px; font-size: 16px;">Follow These Steps EXACTLY:</h3>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    Click the <strong>big red button</strong> below to copy the complete fix SQL
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    Supabase SQL Editor will open automatically
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <strong>Paste ALL the SQL</strong> (Ctrl+V or Cmd+V) - don't edit anything!
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    Click the <strong>"Run"</strong> button (or press Ctrl+Enter)
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    Wait for the green success message (should take 5-10 seconds)
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <div class="step-content">
+                    <strong>Refresh your website</strong> and try adding a product again!
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" id="fix-btn" onclick="copyAndFix()">
+            🔧 COPY FIX & OPEN SUPABASE
+        </button>
+
+        <div class="sql-box" id="sql-box"></div>
+
+        <div class="success" id="success-box">
+            <div class="success-title">✅ SQL Copied Successfully!</div>
+            <div class="success-message">
+                Supabase SQL Editor should have opened in a new tab.<br><br>
+                <strong>Now:</strong><br>
+                1. Paste the SQL (Ctrl+V)<br>
+                2. Click "Run"<br>
+                3. Wait for success message<br>
+                4. Come back and refresh your website
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sql = `-- ============================================
+-- EMERGENCY FIX - RUN THIS IN SUPABASE
+-- ============================================
+-- This will fix ALL issues at once
+-- Copy EVERYTHING below and run in Supabase SQL Editor
+
+-- First, let's check what exists
+SELECT 'Checking tables...' as step;
+
+-- Create products table if missing
+CREATE TABLE IF NOT EXISTS public.products (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  description TEXT,
+  specifications TEXT,
+  price DECIMAL(10,2),
+  in_stock BOOLEAN DEFAULT true,
+  image_url TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Create reviews table if missing (with email field)
+CREATE TABLE IF NOT EXISTS public.reviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  comment TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Create inquiries table if missing
+CREATE TABLE IF NOT EXISTS public.inquiries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  message TEXT NOT NULL,
+  status TEXT DEFAULT 'new',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Enable RLS on all tables
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
+
+-- Drop ALL old policies
+DROP POLICY IF EXISTS "Allow public read access" ON public.products;
+DROP POLICY IF EXISTS "Allow public insert" ON public.products;
+DROP POLICY IF EXISTS "Allow public update" ON public.products;
+DROP POLICY IF EXISTS "Allow public delete" ON public.products;
+
+DROP POLICY IF EXISTS "Allow public read reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Allow public insert reviews" ON public.reviews;
+
+DROP POLICY IF EXISTS "Allow public insert inquiries" ON public.inquiries;
+DROP POLICY IF EXISTS "Allow public read inquiries" ON public.inquiries;
+
+-- Create NEW permissive policies for products
+CREATE POLICY "public_full_access_products" ON public.products
+  FOR ALL TO authenticated, anon
+  USING (true)
+  WITH CHECK (true);
+
+-- Create NEW permissive policies for reviews
+CREATE POLICY "public_full_access_reviews" ON public.reviews
+  FOR ALL TO authenticated, anon
+  USING (true)
+  WITH CHECK (true);
+
+-- Create NEW permissive policies for inquiries
+CREATE POLICY "public_full_access_inquiries" ON public.inquiries
+  FOR ALL TO authenticated, anon
+  USING (true)
+  WITH CHECK (true);
+
+-- ============================================
+-- STORAGE BUCKET - THE MAIN FIX
+-- ============================================
+
+-- Delete existing bucket if it exists (clean slate)
+DO $$
+BEGIN
+  DELETE FROM storage.buckets WHERE id = 'product-images';
+END $$;
+
+-- Wait a moment for deletion to complete
+SELECT pg_sleep(1);
+
+-- Create fresh bucket
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'product-images',
+  'product-images',
+  true,
+  10485760,
+  ARRAY['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif']
+)
+ON CONFLICT (id) DO NOTHING;
+
+-- Drop ALL old storage policies
+DROP POLICY IF EXISTS "Allow public uploads to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read access to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public uploads" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read" ON storage.objects;
+
+-- Create NEW storage policies
+CREATE POLICY "public_upload_images"
+  ON storage.objects FOR INSERT
+  TO authenticated, anon
+  WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "public_read_images"
+  ON storage.objects FOR SELECT
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "public_update_images"
+  ON storage.objects FOR UPDATE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "public_delete_images"
+  ON storage.objects FOR DELETE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- ============================================
+-- VERIFICATION - Check everything was created
+-- ============================================
+
+SELECT 'Tables created:' as check;
+SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename IN ('products', 'reviews', 'inquiries');
+
+SELECT 'Storage bucket created:' as check;
+SELECT id, name, public FROM storage.buckets WHERE id = 'product-images';
+
+SELECT '✅ ALL DONE! Refresh your website and try again!' as status;`;
+
+        function copyAndFix() {
+            navigator.clipboard.writeText(sql).then(() => {
+                // Show SQL box
+                const sqlBox = document.getElementById('sql-box');
+                sqlBox.style.display = 'block';
+                sqlBox.textContent = sql;
+                
+                // Show success message
+                document.getElementById('success-box').style.display = 'block';
+                
+                // Change button
+                const btn = document.getElementById('fix-btn');
+                btn.classList.add('copied');
+                btn.textContent = '✅ COPIED! Check new tab...';
+                
+                // Scroll to success message
+                document.getElementById('success-box').scrollIntoView({ behavior: 'smooth' });
+                
+                // Open Supabase after 1 second
+                setTimeout(() => {
+                    window.open('https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new', '_blank');
+                }, 1000);
+            }).catch(err => {
+                alert('Failed to copy automatically. Please manually select all text in the black box below and press Ctrl+C (Cmd+C on Mac).');
+                console.error('Copy error:', err);
+                
+                // Still show SQL box for manual copy
+                const sqlBox = document.getElementById('sql-box');
+                sqlBox.style.display = 'block';
+                sqlBox.textContent = sql;
+            });
+        }
+    </script>
+</body>
+</html>

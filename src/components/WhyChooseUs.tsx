@@ -16,33 +16,31 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const features = [
-  {
-    icon: Users,
-    title: "Trusted by Generations of Farmers",
-    description:
-      "Serving farming communities with dedication and expertise since 2012",
-    details:
-      "With over a decade of experience in the agricultural industry, we understand the unique challenges farmers face. Our expertise ensures you get the right solutions for your farming needs.",
-  },
-  {
-    icon: Shield,
-    title: "Peace of Mind with Every Purchase",
-    description: "Comprehensive warranty and support on all products",
-    details:
-      "We stand behind our products with comprehensive warranty coverage. Our support team is always ready to assist you with any warranty claims or service needs.",
-  },
-  {
-    icon: Languages,
-    title: "Local Experts Who Speak Your Language",
-    description: "Professional service in your preferred language and dialect",
-    details:
-      "Our certified technicians provide professional repair and maintenance services. We use genuine parts and follow manufacturer guidelines to ensure optimal performance.",
-  },
-];
+
 
 export const WhyChooseUs = () => {
+  const { t } = useLanguage();
+
+  const features = [
+    {
+      icon: Users,
+      title: t("why_us_1_title"),
+      description: t("why_us_1_desc"),
+    },
+    {
+      icon: Shield,
+      title: t("why_us_2_title"),
+      description: t("why_us_2_desc"),
+    },
+    {
+      icon: Languages,
+      title: t("why_us_3_title"),
+      description: t("why_us_3_desc"),
+    },
+  ];
+
   return (
     <section className="py-12 sm:py-16 bg-secondary relative overflow-hidden">
       {/* Background Pattern */}
@@ -64,10 +62,10 @@ export const WhyChooseUs = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-4">
-            Why Choose Sakthi Agro?
+            {t("why_choose_us_title")}
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-3 sm:mb-6">
-            Your trusted partner for quality agricultural solutions
+            {t("why_choose_us_subtitle")}
           </p>
         </motion.div>
 

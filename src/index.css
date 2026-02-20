@@ -10,23 +10,23 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 30 80% 30%; /* #1E7A3C - brand green */
+    --primary: 142 61% 30%; /* #1E7A3C - brand green */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 43 100% 50%; /* #F3B500 - brand yellow */
+    --accent: 43 100% 48%; /* #F3B500 - brand yellow */
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 142 10% 93%; /* #E6EDE6 - light green border */
     --input: 240 5.9% 90%;
-    --ring: 30 80% 30%; /* #1E7A3C - brand green */
+    --ring: 142 61% 30%; /* #1E7A3C - brand green */
     --radius: 0.5rem;
-    --brand-green: 30 60% 30%; /* #1E7A3C */
-    --brand-green-dark: 140 75% 19%; /* #0E5322 */
-    --brand-yellow: 43 100% 50%; /* #F3B500 */
+    --brand-green: 142 61% 30%; /* #1E7A3C */
+    --brand-green-dark: 140 71% 19%; /* #0E5322 */
+    --brand-yellow: 43 100% 48%; /* #F3B500 */
     --brand-gray: 0 0% 23%; /* #3B3B3B */
     --brand-gray-light: 210 15% 46%; /* #6B7280 */
     --brand-bg-light: 140 30% 96%; /* #F1F8F3 */

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Storage Bucket - Sakthi Agro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1E7A3C 0%, #0E5322 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 { color: #1E7A3C; margin-bottom: 15px; }
+        .subtitle { color: #666; margin-bottom: 30px; }
+        .error-box {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .error-title { color: #991b1b; font-weight: 700; margin-bottom: 10px; }
+        .error-message { color: #7f1d1d; }
+        .btn {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4); }
+        .sql-box {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .steps {
+            background: #f0fdf4;
+            border: 2px solid #dcfce7;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .step {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #2E7D32;
+        }
+        .step-number {
+            background: #2E7D32;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content { color: #1E7A3C; line-height: 1.6; }
+        .success-box {
+            background: #dcfce7;
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .success-title { color: #166534; font-weight: 700; margin-bottom: 10px; }
+        .success-message { color: #15803d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Fix Storage Bucket Error</h1>
+        <p class="subtitle">Create the missing product-images bucket</p>
+
+        <div class="error-box">
+            <div class="error-title">❌ Error Found:</div>
+            <div class="error-message">
+                Storage bucket "product-images" doesn't exist.<br>
+                This is why product image uploads are failing.
+            </div>
+        </div>
+
+        <div class="steps">
+            <h3 style="color: #1E7A3C; margin-bottom: 15px;">Quick Fix (2 Steps):</h3>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <strong>Click the button below</strong> to copy the SQL and open Supabase
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <strong>Paste and Run</strong> the SQL in Supabase (takes 5 seconds)
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" onclick="createBucket()">
+            🔧 Create Storage Bucket Now
+        </button>
+
+        <div class="sql-box" id="sql-box" style="display: none;"></div>
+
+        <div class="success-box" id="success-box" style="display: none;">
+            <div class="success-title">✅ Success!</div>
+            <div class="success-message">
+                Storage bucket created! You can now upload product images.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sql = `-- Create storage bucket for product images
+-- Run this in Supabase SQL Editor
+
+INSERT INTO storage.buckets (id, name, public, file_size_limit)
+VALUES ('product-images', 'product-images', true, 5242880)
+ON CONFLICT (id) DO NOTHING;
+
+-- Allow public uploads
+CREATE POLICY "Allow public uploads"
+  ON storage.objects FOR INSERT
+  TO authenticated, anon
+  WITH CHECK (bucket_id = 'product-images');
+
+-- Allow public read
+CREATE POLICY "Allow public read"
+  ON storage.objects FOR SELECT
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- Allow public update
+CREATE POLICY "Allow public update"
+  ON storage.objects FOR UPDATE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- Allow public delete
+CREATE POLICY "Allow public delete"
+  ON storage.objects FOR DELETE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- ✅ Done! Product image uploads will now work!`;
+
+        function createBucket() {
+            // Copy SQL to clipboard
+            navigator.clipboard.writeText(sql).then(() => {
+                // Show SQL
+                document.getElementById('sql-box').style.display = 'block';
+                document.getElementById('sql-box').textContent = sql;
+                
+                // Show success message
+                document.getElementById('success-box').style.display = 'block';
+                
+                // Open Supabase
+                setTimeout(() => {
+                    window.open('https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new', '_blank');
+                }, 500);
+                
+                // Change button text
+                const btn = event.currentTarget;
+                btn.textContent = '✅ SQL Copied! Paste in Supabase and click Run';
+                btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+            });
+        }
+    </script>
+</body>
+</html>

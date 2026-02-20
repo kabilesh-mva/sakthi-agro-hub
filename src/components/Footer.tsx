@@ -70,30 +70,6 @@ export const Footer = () => {
                 <p>Sun: 10:00 AM - 4:00 PM</p>
               </div>
             </div>
-            {/* Social Media Icons */}
-            <div className="flex space-x-3 sm:space-x-4 mt-3">
-              <a
-                href="#"
-                className="bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-              <a
-                href="#"
-                className="bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-              <a
-                href="#"
-                className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -105,17 +81,6 @@ export const Footer = () => {
               </h3>
             </div>
             <ul className="space-y-3 sm:space-y-4">
-              <li>
-                <Link
-                  to="/about"
-                  className="text-xs sm:text-sm hover:text-[#FF6F00] transition-all duration-300 py-2 flex items-center group hover:translate-x-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Shield className="h-3 w-3 sm:h-4 sm:w-4 mr-2 sm:mr-3 opacity-70 group-hover:opacity-100 group-hover:text-[#FF6F00] transition-all" />
-                  <span>About Us</span>
-                </Link>
-              </li>
               <li>
                 <Link
                   to="/products"
@@ -136,17 +101,6 @@ export const Footer = () => {
                 >
                   <Shield className="h-3 w-3 sm:h-4 sm:w-4 mr-2 sm:mr-3 opacity-70 group-hover:opacity-100 group-hover:text-[#FF6F00] transition-all" />
                   <span>Services</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/gallery"
-                  className="text-xs sm:text-sm hover:text-[#FF6F00] transition-all duration-300 py-2 flex items-center group hover:translate-x-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Shield className="h-3 w-3 sm:h-4 sm:w-4 mr-2 sm:mr-3 opacity-70 group-hover:opacity-100 group-hover:text-[#FF6F00] transition-all" />
-                  <span>Gallery</span>
                 </Link>
               </li>
               <li>
@@ -254,7 +208,7 @@ export const Footer = () => {
                   <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
                 </div>
                 <a
-                  href="mailto:info@sakthiagro.com"
+                  href="mailto:info@sakthiagro.com?subject=Inquiry%20from%20Website&body=Hello%20Sakthi%20Agro%20Team%2C%0A%0AI%20would%20like%20to%20inquire%20about..."
                   className="text-xs sm:text-sm hover:text-[#FF6F00] transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -263,31 +217,33 @@ export const Footer = () => {
                 </a>
               </li>
             </ul>
-            <div className="flex flex-wrap gap-2 sm:gap-3 mt-4 sm:mt-6">
+            <div className="flex space-x-3 sm:space-x-4 mt-4 sm:mt-6">
               <a
-                href="tel:+919443600205"
-                className="bg-white/10 hover:bg-white/20 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                aria-label="Call Us"
+                href="https://www.facebook.com/sakthi.agro.5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                aria-label="Facebook"
               >
-                <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
+                <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
               <a
-                href="https://wa.me/919443600205"
+                href="https://www.instagram.com/sakthiagro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/20 hover:bg-white/30 text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+              </a>
+              <a
+                href="https://wa.me/919443600205?text=Hello%20Sakthi%20Agro%2C%20I%20would%20like%20to%20inquire%20about%20your%20products."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                aria-label="WhatsApp Us"
+                aria-label="WhatsApp"
               >
-                <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
-              </a>
-              <a
-                href="https://www.google.com/maps/dir/?api=1&destination=Coimbatore%2C+Tamil+Nadu%2C+India"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#FF6F00] hover:bg-[#E65100] text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                aria-label="Get Directions"
-              >
-                <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
+                <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
             </div>
           </div>

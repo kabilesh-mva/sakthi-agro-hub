@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Guide - Sakthi Agro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #4ade80;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+        }
+        .step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #0f172a;
+            border-radius: 8px;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        .step-content strong {
+            color: #fff;
+        }
+        .btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+        .code {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .note {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .note-title {
+            color: #60a5fa;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .note-content {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        .success .note-title {
+            color: #4ade80;
+        }
+        .admin-info {
+            background: rgba(249, 163, 0, 0.1);
+            border: 1px solid rgba(249, 163, 0, 0.3);
+            text-align: center;
+            padding: 20px;
+        }
+        .admin-code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #f9a300;
+            letter-spacing: 3px;
+            margin-top: 10px;
+        }
+        .link {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Sakthi Agro - Setup Guide</h1>
+        <p class="subtitle">Complete these steps to enable product image uploads</p>
+
+        <div class="card">
+            <h2>📋 Step 1: Create Storage Bucket</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    Open <a href="https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/storage" target="_blank" class="link">Supabase Storage</a> in your browser
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    Click <strong>"New Bucket"</strong> button
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    Fill in:
+                    <ul style="margin-top: 8px; margin-left: 20px; color: #cbd5e1;">
+                        <li><strong>Name:</strong> <code class="code" style="display: inline; padding: 3px 8px;">product-images</code></li>
+                        <li><strong>Public:</strong> ✅ <strong>Enable this</strong></li>
+                        <li><strong>File size limit:</strong> <code class="code" style="display: inline; padding: 3px 8px;">5242880</code> (5MB)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    Click <strong>"Create bucket"</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📝 Step 2: Run Database SQL</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    Go to <a href="https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new" target="_blank" class="link">Supabase SQL Editor</a>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <a href="copy-sql.html" target="_blank" class="btn" style="padding: 10px 20px; font-size: 14px;">
+                        📋 Copy SQL Script
+                    </a>
+                    <p style="margin-top: 10px; font-size: 13px;">Or paste the SQL from <code class="code" style="display: inline;">setup-database.sql</code> file</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    Paste the SQL and click <strong>"Run"</strong> (or press Ctrl+Enter)
+                </div>
+            </div>
+        </div>
+
+        <div class="card success">
+            <h2>✅ Step 3: Test Your Website</h2>
+            <div class="note" style="background: transparent; border: none; padding: 0;">
+                <div class="note-title">🎉 You're all set!</div>
+                <div class="note-content">
+                    <p>1. Refresh your website</p>
+                    <p>2. Go to <strong>/admin</strong> page</p>
+                    <p>3. Login and try adding a product with an image!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card admin-info">
+            <div style="color: #fbbf24; font-size: 14px;">🔐 Admin Login Code:</div>
+            <div class="admin-code">admin123</div>
+        </div>
+
+        <div class="note">
+            <div class="note-title">⚠️ Troubleshooting</div>
+            <div class="note-content">
+                <p style="margin-bottom: 10px;"><strong>"Storage bucket not found" error:</strong></p>
+                <p style="margin-left: 20px; margin-bottom: 15px;">Make sure you created the <code class="code" style="display: inline;">product-images</code> bucket in Step 1</p>
+                
+                <p style="margin-bottom: 10px;"><strong>"Permission denied" error:</strong></p>
+                <p style="margin-left: 20px;">Run the SQL script from Step 2 to set up the correct policies</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, Loader2 } from "lucide-react";
+import { Plus, Edit, Trash2, Loader2, Upload, Image as ImageIcon, X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 
 interface Product {
   id: string;
@@ -46,7 +47,11 @@ const categories = [
   "Engines",
   "Spare Parts & Accessories",
   "Power Tools",
+  "Others",
 ];
+
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export const ProductManagement = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -62,22 +67,33 @@ export const ProductManagement = () => {
     in_stock: true,
     image_url: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   const fetchProducts = useCallback(async () => {
     try {
+      setLoading(true);
       const { data, error } = await supabase
         .from("products")
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase error fetching products:", error);
+        throw error;
+      }
       setProducts(data || []);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error fetching products:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to load products";
       toast({
         title: "Error",
-        description: (error as Error).message || "Failed to load products",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -89,47 +105,185 @@ export const ProductManagement = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+      toast({
+        title: "Invalid file type",
+        description: "Please select a JPG, JPEG, PNG, WebP, or GIF image",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size
+    if (file.size > MAX_IMAGE_SIZE) {
+      toast({
+        title: "File too large",
+        description: "Image must be less than 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSelectedFile(file);
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const uploadImage = async (file: File, productName: string): Promise<string | null> => {
+    if (!file) return null;
 
     try {
+      setUploadingImage(true);
+      setUploadProgress(0);
+
+      // Create a unique filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${productName.replace(/[^a-zA-Z0-9]/g, '-')}-${Date.now()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      // Upload to Supabase Storage
+      const { data, error } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (error) {
+        // If bucket doesn't exist, try to create it (requires admin privileges)
+        if (error.message.includes('bucket')) {
+          toast({
+            title: "Storage bucket not found",
+            description: "Please create a 'product-images' bucket in Supabase Storage",
+            variant: "destructive",
+          });
+        }
+        throw error;
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(filePath);
+
+      setUploadProgress(100);
+      return urlData.publicUrl;
+    } catch (error: any) {
+      console.error("Image upload error:", error);
+      throw new Error(`Failed to upload image: ${error.message}`);
+    } finally {
+      setUploadingImage(false);
+      setUploadProgress(0);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    try {
+      // Validate required fields
+      if (!formData.name.trim()) {
+        throw new Error("Product name is required");
+      }
+      if (!formData.category) {
+        throw new Error("Category is required");
+      }
+
+      // Validate and parse price
+      let priceValue: number | null = null;
+      if (formData.price && formData.price.trim() !== "") {
+        const parsedPrice = parseFloat(formData.price);
+        if (isNaN(parsedPrice)) {
+          throw new Error("Invalid price value. Please enter a valid number.");
+        }
+        priceValue = parsedPrice;
+      }
+
+      // Upload image if selected
+      let imageUrl = formData.image_url;
+      if (selectedFile) {
+        const uploadedUrl = await uploadImage(selectedFile, formData.name);
+        if (uploadedUrl) {
+          imageUrl = uploadedUrl;
+        }
+      }
+
       const productData = {
-        name: formData.name,
+        name: formData.name.trim(),
         category: formData.category,
-        description: formData.description || null,
-        specifications: formData.specifications || null,
-        price: formData.price ? parseFloat(formData.price) : null,
+        description: formData.description.trim() || null,
+        specifications: formData.specifications.trim() || null,
+        price: priceValue,
         in_stock: formData.in_stock,
-        image_url: formData.image_url || null,
+        image_url: imageUrl || null,
       };
 
+      console.log("Submitting product data:", productData);
+
       if (editingProduct) {
-        const { error } = await supabase
+        console.log("Updating product:", editingProduct.id);
+        const { data, error } = await supabase
           .from("products")
           .update(productData)
-          .eq("id", editingProduct.id);
+          .eq("id", editingProduct.id)
+          .select();
 
-        if (error) throw error;
+        if (error) {
+          console.error("Supabase update error:", error);
+          throw error;
+        }
+        console.log("Update result:", data);
         toast({
           title: "Success",
           description: "Product updated successfully",
         });
       } else {
-        const { error } = await supabase.from("products").insert(productData);
+        console.log("Inserting new product");
+        const { data, error } = await supabase
+          .from("products")
+          .insert(productData)
+          .select();
 
-        if (error) throw error;
+        if (error) {
+          console.error("Supabase insert error:", error);
+          throw error;
+        }
+        console.log("Insert result:", data);
         toast({ title: "Success", description: "Product added successfully" });
       }
 
       setDialogOpen(false);
       resetForm();
       fetchProducts();
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Detailed error:", error);
+
+      let errorMessage = "Failed to save product. ";
+      
+      if (error?.message) {
+        errorMessage += error.message;
+      } else if (typeof error === 'string') {
+        errorMessage += error;
+      }
+
       toast({
-        title: "Error",
-        description: (error as Error).message,
+        title: "Error saving product",
+        description: errorMessage,
         variant: "destructive",
       });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -144,6 +298,9 @@ export const ProductManagement = () => {
       in_stock: product.in_stock,
       image_url: product.image_url || "",
     });
+    if (product.image_url) {
+      setImagePreview(product.image_url);
+    }
     setDialogOpen(true);
   };
 
@@ -156,10 +313,11 @@ export const ProductManagement = () => {
       if (error) throw error;
       toast({ title: "Success", description: "Product deleted successfully" });
       fetchProducts();
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred";
       toast({
         title: "Error",
-        description: (error as Error).message,
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -176,6 +334,19 @@ export const ProductManagement = () => {
       image_url: "",
     });
     setEditingProduct(null);
+    setSelectedFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const removeImage = () => {
+    setSelectedFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   if (loading) {
@@ -220,6 +391,7 @@ export const ProductManagement = () => {
                       setFormData({ ...formData, name: e.target.value })
                     }
                     required
+                    disabled={submitting || uploadingImage}
                   />
                 </div>
                 <div className="space-y-2">
@@ -230,6 +402,7 @@ export const ProductManagement = () => {
                       setFormData({ ...formData, category: value })
                     }
                     required
+                    disabled={submitting || uploadingImage}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
@@ -254,6 +427,7 @@ export const ProductManagement = () => {
                     setFormData({ ...formData, description: e.target.value })
                   }
                   rows={3}
+                  disabled={submitting || uploadingImage}
                 />
               </div>
 
@@ -266,6 +440,7 @@ export const ProductManagement = () => {
                     setFormData({ ...formData, specifications: e.target.value })
                   }
                   rows={2}
+                  disabled={submitting || uploadingImage}
                 />
               </div>
 
@@ -280,20 +455,63 @@ export const ProductManagement = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, price: e.target.value })
                     }
+                    disabled={submitting || uploadingImage}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="image_url">Image URL</Label>
-                  <Input
-                    id="image_url"
-                    type="url"
-                    value={formData.image_url}
-                    onChange={(e) =>
-                      setFormData({ ...formData, image_url: e.target.value })
-                    }
-                  />
+                  <Label htmlFor="image">Product Image</Label>
+                  <div className="space-y-2">
+                    <Input
+                      id="image"
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                      onChange={handleImageSelect}
+                      disabled={submitting || uploadingImage}
+                      ref={fileInputRef}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Supported: JPG, JPEG, PNG, WebP, GIF (Max 5MB)
+                    </p>
+                  </div>
                 </div>
               </div>
+
+              {/* Image Preview */}
+              {imagePreview && (
+                <div className="relative rounded-lg overflow-hidden border border-border bg-muted max-w-xs">
+                  <img
+                    src={imagePreview}
+                    alt="Product preview"
+                    className="w-full h-48 object-cover"
+                  />
+                  {!submitting && !uploadingImage && (
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                  {uploadingImage && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <Loader2 className="h-6 w-6 animate-spin mx-auto mb-2" />
+                        <p className="text-sm">Uploading...</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {uploadingImage && uploadProgress > 0 && (
+                <div className="space-y-1">
+                  <Progress value={uploadProgress} className="h-2" />
+                  <p className="text-xs text-muted-foreground">
+                    Uploading image... {uploadProgress}%
+                  </p>
+                </div>
+              )}
 
               <div className="flex items-center space-x-2">
                 <Switch
@@ -302,13 +520,28 @@ export const ProductManagement = () => {
                   onCheckedChange={(checked) =>
                     setFormData({ ...formData, in_stock: checked })
                   }
+                  disabled={submitting || uploadingImage}
                 />
                 <Label htmlFor="in_stock">In Stock</Label>
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button type="submit" className="flex-1">
-                  {editingProduct ? "Update Product" : "Add Product"}
+                <Button type="submit" className="flex-1" disabled={submitting || uploadingImage}>
+                  {submitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {editingProduct ? "Updating..." : "Adding..."}
+                    </>
+                  ) : uploadingImage ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Uploading Image...
+                    </>
+                  ) : (
+                    <>
+                      {editingProduct ? "Update Product" : "Add Product"}
+                    </>
+                  )}
                 </Button>
                 <Button
                   type="button"
@@ -317,6 +550,7 @@ export const ProductManagement = () => {
                     setDialogOpen(false);
                     resetForm();
                   }}
+                  disabled={submitting || uploadingImage}
                 >
                   Cancel
                 </Button>
@@ -330,6 +564,18 @@ export const ProductManagement = () => {
         {products.map((product) => (
           <Card key={product.id}>
             <CardHeader>
+              {product.image_url && (
+                <div className="mb-3 rounded-lg overflow-hidden">
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="w-full h-48 object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect fill='%23e2e8f0' width='200' height='200'/%3E%3Ctext fill='%2394a3b8' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
+                    }}
+                  />
+                </div>
+              )}
               <CardTitle className="text-lg">{product.name}</CardTitle>
               <p className="text-sm text-muted-foreground">
                 {product.category}

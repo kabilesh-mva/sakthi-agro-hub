@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0fdf4;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        h1 { color: #1E7A3C; }
+        .success { color: #22c55e; }
+        .error { color: #ef4444; }
+        .btn {
+            background: #2E7D32;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 5px 10px 0;
+        }
+        .btn:hover { background: #1B5E20; }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .status.loading { background: #fef3c7; color: #92400e; }
+        .status.success { background: #dcfce7; color: #166534; }
+        .status.error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧪 Supabase Connection Test</h1>
+        <p>Testing connection to your Supabase database...</p>
+        
+        <button class="btn" onclick="testConnection()">🔄 Test Connection</button>
+        <button class="btn" onclick="testProducts()">📦 Test Products</button>
+        <button class="btn" onclick="testStorage()">🖼️ Test Storage</button>
+        
+        <div id="status"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://iuuhmkyyalrutbciwwwv.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dWhta3l5YWxydXRiY2l3d3d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1MDAyODksImV4cCI6MjA4NzA3NjI4OX0.KdBSO5Ge463-XA18ej-Zv4n0Gke8IHpYmUtuU9cXwHg';
+
+        function showStatus(message, type) {
+            document.getElementById('status').innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showResult(data) {
+            document.getElementById('result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+
+        async function testConnection() {
+            showStatus('⏳ Testing connection...', 'loading');
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/products?limit=1`, {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Prefer': 'count=exact'
+                    }
+                });
+                
+                if (response.ok) {
+                    showStatus('✅ Connection successful! Supabase is working.', 'success');
+                    showResult({ status: 'Connected', url: SUPABASE_URL });
+                } else {
+                    const error = await response.text();
+                    showStatus('❌ Connection failed: ' + error, 'error');
+                    showResult({ error: error, status: response.status });
+                }
+            } catch (err) {
+                showStatus('❌ Error: ' + err.message, 'error');
+                showResult({ error: err.message });
+            }
+        }
+
+        async function testProducts() {
+            showStatus('⏳ Testing products table...', 'loading');
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*&limit=5`, {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus(`✅ Products table working! Found ${data.length || 0} products.`, 'success');
+                    showResult(data);
+                } else {
+                    showStatus('❌ Products table error: ' + (data.message || 'Unknown error'), 'error');
+                    showResult(data);
+                }
+            } catch (err) {
+                showStatus('❌ Error: ' + err.message, 'error');
+                showResult({ error: err.message });
+            }
+        }
+
+        async function testStorage() {
+            showStatus('⏳ Testing storage bucket...', 'loading');
+            try {
+                const response = await fetch(`${SUPABASE_URL}/storage/v1/buckets/product-images`, {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showStatus('✅ Storage bucket exists and is accessible!', 'success');
+                    showResult(data);
+                } else {
+                    showStatus('❌ Storage bucket not found or not accessible. Run the SQL fix!', 'error');
+                    showResult({ error: 'Bucket not found', details: data });
+                }
+            } catch (err) {
+                showStatus('❌ Error: ' + err.message, 'error');
+                showResult({ error: err.message });
+            }
+        }
+
+        // Run connection test on load
+        window.onload = () => {
+            testConnection();
+        };
+    </script>
+</body>
+</html>

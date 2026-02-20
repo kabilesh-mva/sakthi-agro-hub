@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix RLS Policy Error - One Click</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        .container { max-width: 900px; margin: 0 auto; text-align: center; }
+        h1 { font-size: 32px; margin-bottom: 10px; color: #ef4444; }
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid #ef4444;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            color: #fca5a5;
+        }
+        .subtitle { color: #94a3b8; margin-bottom: 30px; }
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            margin: 10px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); }
+        .btn:active { transform: translateY(0); }
+        .btn.copied { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        .btn-secondary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .steps {
+            text-align: left;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .step {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .step-number {
+            background: #3b82f6;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content { color: #cbd5e1; line-height: 1.6; }
+        .step-content strong { color: #fff; }
+        .success-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        .success-box.show { display: block; }
+        .success-title {
+            color: #4ade80;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .code-preview {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            color: #e2e8f0;
+            max-height: 400px;
+            overflow-y: auto;
+            text-align: left;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔴 RLS Policy Error Fix</h1>
+        <p class="subtitle">Fix: "row violates row-level security policy"</p>
+
+        <div class="error-message">
+            Error: new row violates row-level security policy
+        </div>
+
+        <div class="card">
+            <h2 style="color: #4ade80; margin-bottom: 20px;">✅ Quick Fix (2 Steps)</h2>
+            
+            <button class="btn" onclick="copyAndOpen()">
+                📋 Copy SQL & Open Supabase
+            </button>
+            
+            <div class="success-box" id="success-box">
+                <div class="success-title">✅ SQL Copied!</div>
+                <p style="color: #cbd5e1;">
+                    Supabase SQL Editor opened in a new tab.<br>
+                    <strong>Paste (Ctrl+V) and click Run!</strong>
+                </p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <strong>Click the green button above</strong> - it copies the fix SQL and opens Supabase SQL Editor
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <strong>Paste (Ctrl+V) in SQL Editor</strong> and click <strong>"Run"</strong> button (or press Ctrl+Enter)
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <strong>Go back to your website</strong> and try adding a product again
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 style="color: #e2e8f0; margin-bottom: 15px;">📜 SQL Preview</h2>
+            <p style="color: #94a3b8; font-size: 14px; margin-bottom: 15px;">
+                This SQL removes the restrictive policies and creates new permissive ones
+            </p>
+            <div class="code-preview" id="sql-code"></div>
+        </div>
+    </div>
+
+    <script>
+        const fixSQL = `-- ============================================
+-- FIX: Row-Level Security Policy Error
+-- ============================================
+-- This fixes: "new row violates row-level security policy"
+-- Run in: https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new
+
+-- Step 1: Drop ALL existing policies on storage.objects
+DROP POLICY IF EXISTS "Allow public uploads to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read access to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete product images" ON storage.objects;
+
+DROP POLICY IF EXISTS "Allow public uploads" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete" ON storage.objects;
+
+DROP POLICY IF EXISTS "Insert Policy" ON storage.objects;
+DROP POLICY IF EXISTS "Select Policy" ON storage.objects;
+DROP POLICY IF EXISTS "Update Policy" ON storage.objects;
+DROP POLICY IF EXISTS "Delete Policy" ON storage.objects;
+
+-- Step 2: Create NEW permissive policies (no conditions)
+CREATE POLICY "public_upload_001"
+  ON storage.objects FOR INSERT
+  TO authenticated, anon
+  WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "public_select_001"
+  ON storage.objects FOR SELECT
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "public_update_001"
+  ON storage.objects FOR UPDATE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "public_delete_001"
+  ON storage.objects FOR DELETE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- ✅ Done! Try uploading a product image now.`;
+
+        document.getElementById('sql-code').textContent = fixSQL;
+
+        function copyAndOpen() {
+            navigator.clipboard.writeText(fixSQL).then(() => {
+                // Open Supabase SQL Editor
+                window.open('https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new', '_blank');
+                
+                // Show success message
+                document.getElementById('success-box').classList.add('show');
+                
+                // Change button text
+                const btn = event.currentTarget;
+                btn.classList.add('copied');
+                btn.innerHTML = '✅ Copied! Now paste in Supabase';
+            }).catch(err => {
+                alert('Failed to copy automatically. Please select and copy from the preview below.');
+                console.error('Copy error:', err);
+            });
+        }
+    </script>
+</body>
+</html>

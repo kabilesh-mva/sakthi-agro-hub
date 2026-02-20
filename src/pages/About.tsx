@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -28,7 +29,6 @@ import {
 } from "lucide-react";
 import { TestimonialSlider } from "@/components/TestimonialSlider";
 import MicroTrustStrip from "@/components/MicroTrustStrip";
-import GallerySection from "@/components/GallerySection";
 
 // Import the images we need
 import founderImage from "/src/assets/hero-farming.jpg";
@@ -41,6 +41,7 @@ import teamImage2 from "/src/assets/hero-farming.jpg";
 import teamImage3 from "/src/assets/hero-farming4.jpg";
 
 const About = () => {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const [animatedStats, setAnimatedStats] = useState({
     farmers: 0,
@@ -147,12 +148,12 @@ const About = () => {
 
   // Stats data
   const stats = [
-    { value: "5k+", label: "Happy Farmers", icon: Users },
-    { value: "10k+", label: "Products Serviced", icon: TrendingUp },
-    { value: "12+", label: "Expert Engineers", icon: Users },
-    { value: "4.9/5", label: "Rating", icon: Star },
-    { value: "Pan-India", label: "Delivery", icon: Truck },
-    { value: "ISO", label: "Certified", icon: ShieldCheck },
+    { value: "5k+", label: t("about_stat_1_label"), icon: Users },
+    { value: "10k+", label: t("about_stat_2_label"), icon: TrendingUp },
+    { value: "12+", label: t("about_stat_3_label"), icon: Users },
+    { value: "4.9/5", label: t("about_stat_4_label"), icon: Star },
+    { value: "Pan-India", label: t("about_stat_5_label"), icon: Truck },
+    { value: "ISO", label: t("about_stat_6_label"), icon: ShieldCheck },
   ];
 
   // Timeline data
@@ -209,27 +210,23 @@ const About = () => {
   const values = [
     {
       icon: Heart,
-      title: "Farmer First",
-      description:
-        "Our customers are at the heart of everything we do. We prioritize their needs and satisfaction above all else.",
+      title: t("about_value_1_title"),
+      description: t("about_value_1_desc"),
     },
     {
       icon: ShieldCheck,
-      title: "Quality Assurance",
-      description:
-        "We provide only genuine, high-quality products that deliver lasting performance and reliability.",
+      title: t("about_value_2_title"),
+      description: t("about_value_2_desc"),
     },
     {
       icon: Lightbulb,
-      title: "Innovation",
-      description:
-        "We continuously adapt to bring you the latest in agricultural technology and solutions.",
+      title: t("about_value_3_title"),
+      description: t("about_value_3_desc"),
     },
     {
       icon: Globe,
-      title: "Sustainability",
-      description:
-        "We promote sustainable farming practices and eco-friendly agricultural solutions.",
+      title: t("about_value_4_title"),
+      description: t("about_value_4_desc"),
     },
   ];
 
@@ -340,6 +337,7 @@ const About = () => {
     <>
       <div className="min-h-screen bg-white text-gray-800">
         <Navigation />
+        <div className="pt-14 md:pt-16 lg:pt-20">
 
         {/* Micro-trust strip */}
         <MicroTrustStrip />
@@ -439,7 +437,7 @@ const About = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8"
             >
-              About Sakthi Agro
+              {t("about_hero_title")}
             </motion.h1>
 
             {/* Subtitle with fade-in-up animation */}
@@ -451,8 +449,7 @@ const About = () => {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
               className="text-xl md:text-2xl text-white max-w-3xl mx-auto"
             >
-              Empowering farmers with reliable agricultural solutions since
-              2012.
+              {t("about_hero_subtitle")}
             </motion.p>
           </div>
         </section>
@@ -512,33 +509,20 @@ const About = () => {
                         className="text-4xl font-bold mb-8 text-gray-800"
                         style={{ color: "#1E7A3C" }}
                       >
-                        Our Founder's Story
+                       {t("about_founder_title")}
                       </h2>
                       <div
                         className="space-y-6 text-gray-700 leading-relaxed"
                         style={{ color: "#3B3B3B" }}
                       >
                         <p className="text-lg">
-                          "I started Sakthi Agro in 2012 with a simple mission -
-                          to help farmers like my own family members who
-                          struggled to find reliable agricultural equipment and
-                          service. Coming from a farming background, I
-                          understood the challenges our farming community
-                          faced."
+                          {t("about_founder_text_1")}
                         </p>
                         <p className="text-lg">
-                          Over the years, we've grown from a small shop to a
-                          trusted name in the agricultural equipment industry,
-                          serving over 5,00 farmers across Tamil Nadu. But our
-                          core values remain unchanged - quality, reliability,
-                          and customer satisfaction."
+                          {t("about_founder_text_2")}
                         </p>
                         <p className="text-lg">
-                          Today, we continue to innovate and expand our
-                          services, always keeping the farmer at the center of
-                          our business. Our ISO certification and commitment to
-                          genuine spare parts reflect our dedication to
-                          excellence."
+                          {t("about_founder_text_3")}
                         </p>
                       </div>
                       <div
@@ -549,7 +533,7 @@ const About = () => {
                           className="font-semibold text-gray-800 text-lg"
                           style={{ color: "#0E5322" }}
                         >
-                          - Naveenkumar N, Founder
+                          {t("about_founder_name")}
                         </p>
                         <div
                           className="text-sm text-gray-60"
@@ -620,32 +604,20 @@ const About = () => {
                         className="text-4xl font-bold mb-8 text-gray-800"
                         style={{ color: "#1E7A3C" }}
                       >
-                        Our Story
+                        {t("about_story_title")}
                       </h2>
                       <div
                         className="space-y-6 text-gray-700 leading-relaxed"
                         style={{ color: "#3B3B3B" }}
                       >
                         <p className="text-lg">
-                          Sakthi Agro was founded with a vision to provide
-                          farmers with high-quality agricultural equipment and
-                          exceptional service. Our journey began in 2012 when we
-                          recognized the need for reliable agricultural
-                          solutions in our region.
+                          {t("about_story_text_1")}
                         </p>
                         <p className="text-lg">
-                          Starting as a small service center, we gradually
-                          expanded our offerings to include sales of genuine
-                          spare parts, pumps, engines, and sprayers. Our
-                          commitment to quality and customer service helped us
-                          build a strong reputation in the farming community.
+                          {t("about_story_text_2")}
                         </p>
                         <p className="text-lg">
-                          Today, we serve over 5,000 farmers across Tamil Nadu
-                          and have become a trusted name in the agricultural
-                          equipment industry. Our ISO certification and modern
-                          facility equipped with the latest tools reflect our
-                          commitment to excellence.
+                          {t("about_story_text_3")}
                         </p>
                       </div>
                     </div>
@@ -672,14 +644,13 @@ const About = () => {
                 className="text-4xl font-bold mb-6 text-gray-800"
                 style={{ color: "#1E7A3C" }}
               >
-                Our Values
+                {t("about_values_title")}
               </h2>
               <p
                 className="text-xl text-gray-60 max-w-2xl mx-auto"
                 style={{ color: "#3B3B3B" }}
               >
-                The principles that guide our commitment to serving the farming
-                community
+                {t("about_values_subtitle")}
               </p>
             </motion.div>
 
@@ -763,13 +734,13 @@ const About = () => {
                 className="text-4xl font-bold mb-6 text-gray-800"
                 style={{ color: "#FFFFFF" }}
               >
-                Why Farmers Trust Us
+                {t("about_stats_title")}
               </h2>
               <p
                 className="text-xl text-gray-60 max-w-2xl mx-auto"
                 style={{ color: "#FFFFFF" }}
               >
-                Our commitment to excellence is reflected in these numbers
+                {t("about_stats_subtitle")}
               </p>
             </motion.div>
 
@@ -1040,8 +1011,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* Gallery Section - Light Green Background */}
-        <GallerySection />
 
         {/* Visit Our Shop Section - White Background */}
         <section
@@ -1098,20 +1067,20 @@ const About = () => {
                       className="text-gray-600 text-lg"
                       style={{ color: "rgba(255,255,0.75)" }}
                     >
-                      Coimbatore, Tamil Nadu, India
+                      113, Kattoor Main, Ram Nagar, Coimbatore, Tamil Nadu 641009
                     </p>
                   </div>
                 </div>
                 <div className="rounded-xl overflow-hidden shadow-lg">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.411436852982!2d76.96285687504522!3d1.00772538915468!2m3!1f0!2f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8597b1fcfe0b3%3A0x640b518711d823a1!2sSakthi%20agro!5e0!3m2!1sen!2sin!4v176241961612!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.3254!2d76.9628568!3d11.0077253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDAwJzI3LjgiTiA3NsKwNTcnNDYuMyJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
                     width="100%"
                     height="450"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Sakthi Agro Shop Location"
+                    title="Sakthi Agro Shop Location - 113, Kattoor Main, Ram Nagar, Coimbatore"
                     className="rounded-lg"
                   ></iframe>
                 </div>
@@ -1360,6 +1329,7 @@ const About = () => {
             </motion.div>
           </div>
         </section>
+        </div>
       </div>{" "}
       {/* Close the main div */}
       <Footer />

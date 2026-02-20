@@ -9,7 +9,10 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export const ContactSection = () => {
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,14 +37,14 @@ export const ContactSection = () => {
       if (error) throw error;
 
       toast({
-        title: "Message Sent!",
-        description: "We'll get back to you shortly.",
+        title: t("contact_success_title"),
+        description: t("contact_success_desc"),
       });
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
+        title: t("contact_error_title"),
+        description: t("contact_error_desc"),
         variant: "destructive",
       });
     } finally {
@@ -70,10 +73,10 @@ export const ContactSection = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 relative z-10">
-            Get In Touch With Us
+            {t("contact_title")}
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto relative z-10">
-            Send us an inquiry or reach out via phone or WhatsApp
+            {t("contact_subtitle")}
           </p>
         </motion.div>
 
@@ -93,7 +96,7 @@ export const ContactSection = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Send Us an Inquiry
+              {t("contact_form_title")}
             </motion.h3>
             <motion.p
               className="text-muted-foreground mb-6"
@@ -102,7 +105,7 @@ export const ContactSection = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              Prefer instant chat? Click WhatsApp instead of filling the form!
+              {t("contact_whatsapp_hint")}
             </motion.p>
             <motion.div
               className="flex-grow"
@@ -119,7 +122,7 @@ export const ContactSection = () => {
                   >
                     <div>
                       <Input
-                        placeholder="Your Name"
+                        placeholder={t("contact_name_placeholder")}
                         value={formData.name}
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
@@ -131,7 +134,7 @@ export const ContactSection = () => {
                     <div>
                       <Input
                         type="email"
-                        placeholder="Email Address"
+                        placeholder={t("contact_email_placeholder")}
                         value={formData.email}
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
@@ -143,7 +146,7 @@ export const ContactSection = () => {
                     <div>
                       <Input
                         type="tel"
-                        placeholder="Phone Number"
+                        placeholder={t("contact_phone_placeholder")}
                         value={formData.phone}
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
@@ -154,7 +157,7 @@ export const ContactSection = () => {
                     </div>
                     <div className="flex-grow">
                       <Textarea
-                        placeholder="Your Message"
+                        placeholder={t("contact_message_placeholder")}
                         rows={4}
                         value={formData.message}
                         onChange={(e) =>
@@ -173,10 +176,10 @@ export const ContactSection = () => {
                       {loading ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Sending...
+                          {t("contact_sending")}
                         </>
                       ) : (
-                        "Send Message"
+                        t("contact_submit_btn")
                       )}
                     </Button>
                   </form>
@@ -194,7 +197,7 @@ export const ContactSection = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Find Us
+              {t("find_us_title")}
             </motion.h3>
             <motion.div
               className="rounded-xl overflow-hidden shadow-lg flex-grow"

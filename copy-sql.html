@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy SQL - Sakthi Agro Database Setup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #4ade80;
+        }
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            font-size: 18px;
+            color: #e2e8f0;
+        }
+        .copy-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .sql-code {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .sql-code::-webkit-scrollbar {
+            width: 8px;
+        }
+        .sql-code::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        .sql-code::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        .sql-code::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .steps {
+            margin-top: 25px;
+            padding: 20px;
+            background: #0f172a;
+            border-radius: 8px;
+        }
+        .steps h3 {
+            color: #4ade80;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .step-number {
+            background: #22c55e;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .link {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .admin-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(249, 163, 0, 0.1);
+            border: 1px solid rgba(249, 163, 0, 0.3);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .admin-info span {
+            color: #fbbf24;
+            font-size: 14px;
+        }
+        .admin-code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f9a300;
+            letter-spacing: 2px;
+        }
+        .error-fix {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .error-fix-title {
+            color: #4ade80;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .error-fix-content {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Sakthi Agro - Database Setup</h1>
+        <p class="subtitle">Copy and run this SQL in your Supabase project</p>
+        
+        <div class="error-fix">
+            <div class="error-fix-title">✅ Fixed: Policy Already Exists Error</div>
+            <div class="error-fix-content">
+                This SQL now includes DROP POLICY statements to remove existing policies before creating new ones.
+                Run this updated script to fix the "policy already exists" error.
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="header">
+                <h2>📋 SQL Script</h2>
+                <button class="copy-btn" onclick="copySQL()">
+                    <svg id="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg id="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span id="btn-text">Copy SQL</span>
+                </button>
+            </div>
+            
+            <div class="sql-code" id="sql-code">-- Sakthi Agro Database Setup (FIXED VERSION)
+-- Run this in: https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new
+
+-- Create products table if not exists
+CREATE TABLE IF NOT EXISTS public.products (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  description TEXT,
+  specifications TEXT,
+  price DECIMAL(10,2),
+  in_stock BOOLEAN DEFAULT true,
+  image_url TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Create inquiries table if not exists
+CREATE TABLE IF NOT EXISTS public.inquiries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  message TEXT NOT NULL,
+  status TEXT DEFAULT 'new',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Enable Row Level Security
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies (fixes "already exists" error)
+DROP POLICY IF EXISTS "Allow public read access" ON public.products;
+DROP POLICY IF EXISTS "Allow public insert" ON public.products;
+DROP POLICY IF EXISTS "Allow public update" ON public.products;
+DROP POLICY IF EXISTS "Allow public delete" ON public.products;
+
+DROP POLICY IF EXISTS "Allow public insert inquiries" ON public.inquiries;
+DROP POLICY IF EXISTS "Allow public read inquiries" ON public.inquiries;
+DROP POLICY IF EXISTS "Allow public update inquiries" ON public.inquiries;
+
+DROP POLICY IF EXISTS "Allow public uploads to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read access to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete product images" ON storage.objects;
+
+-- Create new policies for products
+CREATE POLICY "Allow public read access" ON public.products
+  FOR SELECT TO authenticated, anon USING (true);
+
+CREATE POLICY "Allow public insert" ON public.products
+  FOR INSERT TO authenticated, anon WITH CHECK (true);
+
+CREATE POLICY "Allow public update" ON public.products
+  FOR UPDATE TO authenticated, anon USING (true);
+
+CREATE POLICY "Allow public delete" ON public.products
+  FOR DELETE TO authenticated, anon USING (true);
+
+-- Create policies for inquiries
+CREATE POLICY "Allow public insert inquiries" ON public.inquiries
+  FOR INSERT TO authenticated, anon WITH CHECK (true);
+
+CREATE POLICY "Allow public read inquiries" ON public.inquiries
+  FOR SELECT TO authenticated, anon USING (true);
+
+CREATE POLICY "Allow public update inquiries" ON public.inquiries
+  FOR UPDATE TO authenticated, anon USING (true);
+
+-- Create storage bucket for product images
+INSERT INTO storage.buckets (id, name, public, file_size_limit)
+VALUES ('product-images', 'product-images', true, 5242880)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage policies
+CREATE POLICY "Allow public uploads to product images"
+  ON storage.objects FOR INSERT
+  TO authenticated, anon
+  WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public read access to product images"
+  ON storage.objects FOR SELECT
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public update product images"
+  ON storage.objects FOR UPDATE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public delete product images"
+  ON storage.objects FOR DELETE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- ✅ Database and Storage are ready!</div>
+        </div>
+        
+        <div class="steps">
+            <h3>📝 How to Run:</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                <span>Click the <strong>"Copy SQL"</strong> button above</span>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <span>Open <a href="https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new" target="_blank" class="link">Supabase SQL Editor</a></span>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span>Paste the SQL (Ctrl+V) and click <strong>Run</strong> (or Ctrl+Enter)</span>
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <span>Go to your website's <a href="http://localhost:8080/admin" target="_blank" class="link">Admin Panel</a></span>
+            </div>
+        </div>
+        
+        <div class="admin-info">
+            <span>🔐 Admin Login Code:</span>
+            <div class="admin-code">admin123</div>
+        </div>
+    </div>
+
+    <script>
+        const sqlCode = `-- Sakthi Agro Database Setup (FIXED VERSION)
+-- Run this in: https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new
+
+-- Create products table if not exists
+CREATE TABLE IF NOT EXISTS public.products (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  description TEXT,
+  specifications TEXT,
+  price DECIMAL(10,2),
+  in_stock BOOLEAN DEFAULT true,
+  image_url TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Create inquiries table if not exists
+CREATE TABLE IF NOT EXISTS public.inquiries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  message TEXT NOT NULL,
+  status TEXT DEFAULT 'new',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Enable Row Level Security
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies (fixes "already exists" error)
+DROP POLICY IF EXISTS "Allow public read access" ON public.products;
+DROP POLICY IF EXISTS "Allow public insert" ON public.products;
+DROP POLICY IF EXISTS "Allow public update" ON public.products;
+DROP POLICY IF EXISTS "Allow public delete" ON public.products;
+
+DROP POLICY IF EXISTS "Allow public insert inquiries" ON public.inquiries;
+DROP POLICY IF EXISTS "Allow public read inquiries" ON public.inquiries;
+DROP POLICY IF EXISTS "Allow public update inquiries" ON public.inquiries;
+
+DROP POLICY IF EXISTS "Allow public uploads to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read access to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete product images" ON storage.objects;
+
+-- Create new policies for products
+CREATE POLICY "Allow public read access" ON public.products
+  FOR SELECT TO authenticated, anon USING (true);
+
+CREATE POLICY "Allow public insert" ON public.products
+  FOR INSERT TO authenticated, anon WITH CHECK (true);
+
+CREATE POLICY "Allow public update" ON public.products
+  FOR UPDATE TO authenticated, anon USING (true);
+
+CREATE POLICY "Allow public delete" ON public.products
+  FOR DELETE TO authenticated, anon USING (true);
+
+-- Create policies for inquiries
+CREATE POLICY "Allow public insert inquiries" ON public.inquiries
+  FOR INSERT TO authenticated, anon WITH CHECK (true);
+
+CREATE POLICY "Allow public read inquiries" ON public.inquiries
+  FOR SELECT TO authenticated, anon USING (true);
+
+CREATE POLICY "Allow public update inquiries" ON public.inquiries
+  FOR UPDATE TO authenticated, anon USING (true);
+
+-- Create storage bucket for product images
+INSERT INTO storage.buckets (id, name, public, file_size_limit)
+VALUES ('product-images', 'product-images', true, 5242880)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage policies
+CREATE POLICY "Allow public uploads to product images"
+  ON storage.objects FOR INSERT
+  TO authenticated, anon
+  WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public read access to product images"
+  ON storage.objects FOR SELECT
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public update product images"
+  ON storage.objects FOR UPDATE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public delete product images"
+  ON storage.objects FOR DELETE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- ✅ Database and Storage are ready!`;
+
+        function copySQL() {
+            navigator.clipboard.writeText(sqlCode).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const btnText = document.getElementById('btn-text');
+                const copyIcon = document.getElementById('copy-icon');
+                const checkIcon = document.getElementById('check-icon');
+                
+                btn.classList.add('copied');
+                btnText.textContent = 'Copied!';
+                copyIcon.style.display = 'none';
+                checkIcon.style.display = 'block';
+                
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btnText.textContent = 'Copy SQL';
+                    copyIcon.style.display = 'block';
+                    checkIcon.style.display = 'none';
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy. Please select and copy manually.');
+                console.error('Copy error:', err);
+            });
+        }
+    </script>
+</body>
+</html>

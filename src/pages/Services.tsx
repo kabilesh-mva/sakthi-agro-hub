@@ -9,9 +9,6 @@ import { Service } from "@/types/service";
 import { ServiceIcon } from "@/components/ServiceIcons";
 import { useEffect } from "react";
 
-// Pre-define the SVG pattern to avoid inline construction
-const backgroundPattern = `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`;
-
 const Services = () => {
   // Map service IDs to icon types for the animated icons
   const getServiceIconType = (id: string) => {
@@ -24,6 +21,10 @@ const Services = () => {
         return "parts";
       case "annual-maintenance":
         return "maintenance";
+      case "field-support":
+        return "support";
+      case "installation-setup":
+        return "installation";
       default:
         return "repair";
     }
@@ -32,24 +33,22 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
       <Navigation />
+      <div className="pt-14 md:pt-16 lg:pt-20">
 
-      {/* Enhanced Hero Section with Animated Gradient */}
+      {/* Hero Section */}
       <section
         className="py-12 sm:py-16 bg-gradient-to-r from-[#2E7D32] to-[#1B5E20] text-primary-foreground relative overflow-hidden"
         aria-labelledby="services-hero-title"
       >
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2E7D32] via-[#3FA34D] to-[#7BC67E] bg-[length:400%_400%] animate-gradient-move"></div>
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: backgroundPattern }}
-          aria-hidden="true"
-        ></div>
+        {/* SVG Pattern background */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center" role="banner">
             <h1
               id="services-hero-title"
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-green-200"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-6"
             >
               Our Services
             </h1>
@@ -69,7 +68,7 @@ const Services = () => {
           <h2 id="services-grid-title" className="sr-only">
             Our Services
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {servicesData.map((service: Service, idx: number) => (
               <InView
                 key={service.id}
@@ -84,16 +83,16 @@ const Services = () => {
                 }}
                 viewOptions={{ margin: "0px 0px -100px 0px" }}
               >
-                <div className="service-card-wrapper" data-service={service.id}>
+                <div className="service-card-wrapper h-full" data-service={service.id}>
                   <Card
-                    className="service-card hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg bg-card/90 backdrop-blur-sm rounded-xl overflow-hidden group"
+                    className="service-card hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg bg-card/90 backdrop-blur-sm rounded-xl overflow-hidden group h-full flex flex-col"
                     role="region"
                     aria-labelledby={`service-title-${idx}`}
                   >
-                    <CardContent className="p-8 relative overflow-hidden">
+                    <CardContent className="p-8 relative overflow-hidden flex flex-col flex-grow">
                       <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="relative z-10">
-                        <div className="mb-6 flex justify-center">
+                      <div className="relative z-10 flex flex-col flex-grow">
+                        <div className="mb-6 flex justify-center flex-shrink-0">
                           <div
                             className="rounded-full bg-gradient-to-br from-primary/20 to-primary/10 p-5 inline-flex items-center justify-center shadow-inner border border-primary/20 group-hover:shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 transform"
                             aria-hidden="true"
@@ -106,15 +105,15 @@ const Services = () => {
                         </div>
                         <h3
                           id={`service-title-${idx}`}
-                          className="text-2xl font-bold mb-3 text-center text-foreground group-hover:text-primary transition-colors duration-300"
+                          className="text-xl font-bold mb-3 text-center text-foreground group-hover:text-primary transition-colors duration-300 flex-shrink-0"
                         >
                           {service.title}
                         </h3>
-                        <p className="text-muted-foreground mb-4 text-center">
+                        <p className="text-muted-foreground mb-4 text-center text-sm flex-shrink-0">
                           {service.description}
                         </p>
                         <ul
-                          className="space-y-2 mt-6"
+                          className="space-y-2 mt-auto"
                           aria-label={`${service.title} features`}
                         >
                           {service.features.map((feature) => (
@@ -167,8 +166,8 @@ const Services = () => {
                     className="flex items-center gap-2 relative z-10"
                   >
                     <span className="animate-pulse">📞</span> Call for Service
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-700 to-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                   </a>
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-700 to-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Button>
                 <Button
                   size="lg"
@@ -181,14 +180,15 @@ const Services = () => {
                     className="flex items-center gap-2 relative z-10"
                   >
                     <span className="animate-spin">🔄</span> Request Callback
+                    <div className="absolute inset-0 bg-green-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                   </a>
-                  <div className="absolute inset-0 bg-green-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Button>
               </div>
             </div>
           </InView>
         </div>
       </section>
+      </div>
 
       <Footer />
       <WhatsAppButton />

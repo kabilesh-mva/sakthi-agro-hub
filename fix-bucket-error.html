@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Bucket Error - Sakthi Agro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { font-size: 28px; margin-bottom: 10px; color: #f87171; }
+        .subtitle { color: #94a3b8; margin-bottom: 30px; }
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .card h2 {
+            font-size: 18px;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+        .step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #0f172a;
+            border-radius: 8px;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .step-content { color: #cbd5e1; line-height: 1.6; }
+        .btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+        .code {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            margin: 10px 0;
+        }
+        .warning {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .warning-title { color: #f87171; font-weight: 600; margin-bottom: 8px; }
+        .warning-content { color: #cbd5e1; font-size: 14px; }
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        .success .warning-title { color: #4ade80; }
+        .checklist {
+            list-style: none;
+            margin: 10px 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checklist li::before {
+            content: "☐";
+            color: #f87171;
+            font-size: 18px;
+        }
+        .checklist li.done::before {
+            content: "✓";
+            color: #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚠️ Bucket Not Found - Fix Guide</h1>
+        <p class="subtitle">Follow these steps to fix the storage bucket error</p>
+
+        <div class="warning">
+            <div class="warning-title">🔍 Why This Error Happens</div>
+            <div class="warning-content">
+                SQL cannot create storage buckets directly. You MUST create the bucket in the Supabase Storage Dashboard first, then run SQL to set permissions.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>✅ Step-by-Step Fix</h2>
+            
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <strong>Go to Supabase Storage Dashboard</strong>
+                    <br>
+                    <a href="https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/storage" target="_blank" class="btn" style="margin-top: 10px;">
+                        Open Storage Dashboard →
+                    </a>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <strong>Check if bucket exists:</strong>
+                    <ul class="checklist" id="checklist">
+                        <li id="check1">Look for a bucket named <code class="code" style="display:inline; padding: 2px 6px;">product-images</code></li>
+                        <li id="check2">Bucket should be <strong>Public</strong> (globe icon)</li>
+                        <li id="check3">File size limit should be <code class="code" style="display:inline; padding: 2px 6px;">5MB</code> (5242880 bytes)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <strong>If bucket DOES NOT exist - Create it:</strong>
+                    <br>
+                    Click <strong>"New Bucket"</strong> and fill in:
+                    <ul style="margin-top: 8px; margin-left: 20px; color: #cbd5e1;">
+                        <li><strong>Name:</strong> <code class="code" style="display: inline;">product-images</code> (exactly!)</li>
+                        <li><strong>Public:</strong> ✅ <strong>Enable</strong></li>
+                        <li><strong>File size limit:</strong> <code class="code" style="display: inline;">5242880</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <strong>If bucket EXISTS but error shows:</strong>
+                    <br>
+                    The bucket name might have spaces or different casing. Delete it and create a new one with exact name: <code class="code" style="display:inline; padding: 2px 6px;">product-images</code> (lowercase, hyphen, no spaces)
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    <strong>Run the Storage Policies SQL</strong>
+                    <br>
+                    After bucket is created, run this SQL to set permissions:
+                    <br>
+                    <a href="#" onclick="copyPolicies(); return false;" class="btn btn-success" style="margin-top: 10px;">
+                        📋 Copy Storage Policies SQL
+                    </a>
+                    <br>
+                    Then go to <a href="https://supabase.com/dashboard/project/iuuhmkyyalrutbciwwwv/sql/new" target="_blank" style="color: #60a5fa;">SQL Editor</a> and run it.
+                </div>
+            </div>
+        </div>
+
+        <div class="card success">
+            <h2>✅ After Bucket is Created</h2>
+            <div class="warning success">
+                <div class="warning-title">Test Your Setup</div>
+                <div class="warning-content">
+                    1. Refresh your website<br>
+                    2. Go to /admin<br>
+                    3. Login: <strong>admin123</strong><br>
+                    4. Try adding a product with an image<br>
+                    5. If it works - you're done! 🎉
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔧 Still Having Issues?</h2>
+            <div class="warning">
+                <div class="warning-title">Common Problems</div>
+                <div class="warning-content">
+                    <p><strong>"Bucket already exists"</strong> - Delete the existing bucket and recreate with exact name <code class="code" style="display:inline;">product-images</code></p>
+                    <p style="margin-top: 10px;"><strong>"Permission denied"</strong> - Make sure bucket is set to <strong>Public</strong></p>
+                    <p style="margin-top: 10px;"><strong>"404 Not Found"</strong> - Check your Supabase project URL is correct</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const policiesSQL = `-- Storage Policies for product-images bucket
+-- Run this AFTER creating the bucket in Storage Dashboard
+
+-- Drop existing policies first
+DROP POLICY IF EXISTS "Allow public uploads to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public read access to product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public update product images" ON storage.objects;
+DROP POLICY IF EXISTS "Allow public delete product images" ON storage.objects;
+
+-- Create new policies
+CREATE POLICY "Allow public uploads to product images"
+  ON storage.objects FOR INSERT
+  TO authenticated, anon
+  WITH CHECK (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public read access to product images"
+  ON storage.objects FOR SELECT
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public update product images"
+  ON storage.objects FOR UPDATE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+CREATE POLICY "Allow public delete product images"
+  ON storage.objects FOR DELETE
+  TO authenticated, anon
+  USING (bucket_id = 'product-images');
+
+-- ✅ Storage policies ready!`;
+
+        function copyPolicies() {
+            navigator.clipboard.writeText(policiesSQL).then(() => {
+                alert('✅ Storage Policies SQL copied!\n\nNow go to SQL Editor and paste it.');
+            }).catch(err => {
+                alert('Failed to copy. Please select and copy manually.');
+            });
+        }
+    </script>
+</body>
+</html>

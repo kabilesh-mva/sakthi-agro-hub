@@ -1,4 +1,4 @@
-import { Wrench, Shield, Package, Clock, Phone } from "lucide-react";
+import { Wrench, Shield, Package, Clock, Phone, Settings } from "lucide-react";
 import { Service } from "@/types/service";
 
 export const servicesData: Service[] = [
@@ -63,10 +63,20 @@ export const servicesData: Service[] = [
       { id: "always-available", text: "Available 24/7 for emergency support" },
       { id: "field-experts", text: "Experienced field technicians" },
       { id: "quick-response", text: "Rapid response to field emergencies" },
-      {
-        id: "equipment-troubleshooting",
-        text: "On-site equipment troubleshooting",
-      },
+      { id: "equipment-troubleshooting", text: "On-site equipment troubleshooting" },
+    ],
+  },
+  {
+    id: "installation-setup",
+    icon: Settings,
+    title: "Equipment Installation & Setup",
+    description:
+      "Professional installation and setup services for new agricultural equipment",
+    features: [
+      { id: "professional-install", text: "Professional installation" },
+      { id: "equipment-testing", text: "Equipment testing & calibration" },
+      { id: "operator-training", text: "Basic operator training" },
+      { id: "safety-checks", text: "Safety checks & verification" },
     ],
   },
 ];

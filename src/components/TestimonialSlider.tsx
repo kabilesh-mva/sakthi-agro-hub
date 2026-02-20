@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star, Phone, MessageCircle, MapPin } from "lucide-react";
@@ -10,50 +11,40 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const testimonials = [
-  {
-    name: "Rajesh Kumar",
-    location: "Coimbatore, Tamil Nadu",
-    text: "Sakthi Agro has been my trusted partner for agricultural equipment for over 5 years. Their genuine spare parts and expert service keep my farm running efficiently.",
-    rating: 5,
-    image: "",
-  },
-  {
-    name: "Mohan Raj",
-    location: "Tirupur, Tamil Nadu",
-    text: "The quality of their diesel engines is exceptional. The warranty support and expert service team have saved me countless hours during harvest season.",
-    rating: 5,
-    image: "",
-  },
-  {
-    name: "Vijay Sethupathi",
-    location: "Erode, Tamil Nadu",
-    text: "Their sprayers are top-notch quality and the customer service is excellent. I've recommended them to all my fellow farmers in the area.",
-    rating: 5,
-    image: "",
-  },
-  {
-    name: "Senthil Kumar",
-    location: "Salem, Tamil Nadu",
-    text: "The genuine spare parts availability is what sets them apart. No more waiting for weeks to get my equipment fixed. Highly recommend!",
-    rating: 5,
-    image: "",
-  },
-  {
-    name: "Arjun Singh",
-    location: "Madurai, Tamil Nadu",
-    text: "Best agricultural equipment service center in the region. Quick response and reliable solutions. Their team knows their products inside out.",
-    rating: 5,
-    image: "",
-  },
-  {
-    name: "Kumaravel S",
-    location: "Chennai, Tamil Nadu",
-    text: "I've tried multiple suppliers, but Sakthi Agro stands out for their quality products and after-sales service. Worth every penny!",
-    rating: 5,
-    image: "",
-  },
-];
+export const TestimonialSlider = () => {
+  const { t } = useLanguage();
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  const testimonials = [
+    {
+      name: "Rajesh Kumar",
+      location: t("testimonial_1_loc"),
+      text: t("testimonial_1_text"),
+      rating: 5,
+      image: "",
+    },
+    {
+      name: "Mohan Raj",
+      location: t("testimonial_2_loc"),
+      text: t("testimonial_2_text"),
+      rating: 5,
+      image: "",
+    },
+    {
+      name: "Vijay Sethupathi",
+      location: t("testimonial_3_loc"),
+      text: t("testimonial_3_text"),
+      rating: 5,
+      image: "",
+    },
+    {
+      name: "Senthil Kumar",
+      location: t("testimonial_4_loc"),
+      text: t("testimonial_4_text"),
+      rating: 5,
+      image: "",
+    },
+  ];
 
 // Simple carousel indicators component
 const CarouselIndicators = ({
@@ -78,8 +69,7 @@ const CarouselIndicators = ({
   );
 };
 
-export const TestimonialSlider = () => {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+
 
   return (
     <div className="w-full max-w-4xl mx-auto py-12 sm:py-16">
@@ -100,7 +90,7 @@ export const TestimonialSlider = () => {
         <CarouselContent className="-ml-2 md:-ml-4">
           {testimonials.map((testimonial, index) => (
             <CarouselItem key={index} className="pl-2 md:pl-4">
-              <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl rounded-xl overflow-hidden h-full">
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden h-full">
                 <CardContent className="p-6 md:p-8 flex flex-col h-full">
                   <div className="flex items-center mb-4">
                     <div className="flex items-center">

@@ -1,83 +1,92 @@
 import { useState } from "react";
-import { HelpCircle, Tractor, Droplets, Gavel, Wrench, Users } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
-const faqData = [
-  {
-    question: "What types of agricultural equipment do you sell?",
-    answer: "We specialize in sprayers, pumps, engines, and genuine spare parts for agricultural equipment. Our range includes battery sprayers, manual sprayers, power sprayers, diesel pumps, petrol pumps, submersible pumps, diesel engines, petrol engines, and a wide variety of spare parts.",
-    icon: Tractor
-  },
-  {
-    question: "Do you provide warranty on your products?",
-    answer: "Yes, all our products come with comprehensive warranty coverage. We stand behind our products and our support team is always ready to assist you with any warranty claims or service needs.",
-    icon: Wrench
-  },
-  {
-    question: "What are your business hours?",
-    answer: "We are open Monday to Saturday from 9:00 AM to 6:00 PM and on Sundays from 10:0 AM to 4:00 PM. Our expert support is available 24/7 for urgent service needs.",
-    icon: HelpCircle
-  },
-  {
-    question: "Do you offer service and maintenance?",
-    answer: "Yes, we provide professional repair and maintenance services by skilled technicians. We use genuine parts and follow manufacturer guidelines to ensure optimal performance of your equipment.",
-    icon: Gavel
-  },
-  {
-    question: "How can I become a dealer?",
-    answer: "We are always looking for reliable dealers. You can submit a dealer inquiry through our website, and our team will contact you with more details about the process and requirements.",
-    icon: Users
-  },
-  {
-    question: "Do you deliver products outside Coimbatore?",
-    answer: "Yes, we offer pan-India delivery services. We have successfully serviced over 10,000 products across Tamil Nadu and other parts of India.",
-    icon: Droplets
-  },
-  {
-    question: "Can you deliver to my village?",
-    answer: "Yes, we provide delivery services to villages across Tamil Nadu and other parts of India. Our logistics team ensures timely delivery to even remote locations.",
-    icon: Tractor
-  },
-  {
-    question: "Do you provide doorstep service?",
-    answer: "Yes, we offer doorstep service for equipment maintenance and repair. Our technicians will visit your location to service your equipment at your convenience.",
-    icon: Gavel
-  }
-];
+interface FAQItem {
+  question: string;
+  answer: string;
+}
 
-export const FAQSection = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const faqs: FAQItem[] = [
+    {
+      question: "What products do you sell?",
+      answer: "We sell a wide range of agricultural equipment including sprayers, pumps, diesel engines, spare parts, and power tools. Visit our Products page to see our complete catalog.",
+    },
+    {
+      question: "Do you provide warranty on products?",
+      answer: "Yes, all our products come with manufacturer warranty. The warranty period varies by product category. Please check the specific product details or contact us for more information.",
+    },
+    {
+      question: "Do you offer after-sales service?",
+      answer: "Absolutely! We provide comprehensive after-sales service including repairs, maintenance, and genuine spare parts. Our expert team is available to support you.",
+    },
+    {
+      question: "Can I visit your store in Coimbatore?",
+      answer: "Yes! We welcome customers to visit our store. We're located in Coimbatore, Tamil Nadu. Check our Contact page for address and operating hours.",
+    },
+    {
+      question: "Do you deliver outside Coimbatore?",
+      answer: "Yes, we deliver across Tamil Nadu and other states. Delivery charges and time may vary based on location. Contact us for specific delivery details.",
+    },
+    {
+      question: "Are your spare parts genuine?",
+      answer: "Yes, 100% genuine! We only stock authentic spare parts from trusted manufacturers. Quality and authenticity are our top priorities.",
+    },
+    {
+      question: "How can I contact customer support?",
+      answer: "You can reach us via phone at +91 9443600205, WhatsApp, or email. Visit our Contact page to send us a message directly.",
+    },
+    {
+      question: "Do you offer bulk discounts for dealers?",
+      answer: "Yes, we offer special pricing for dealers and bulk orders. Contact us to discuss dealer partnerships and wholesale pricing.",
+    },
+  ];
 
   const toggleFAQ = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
+    setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-gradient-to-br from-green-50 to-emerald-50" id="faq">
-      <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        <div className="text-center mb-12 sm:mb-16 relative z-20">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <HelpCircle className="h-8 w-8 text-[#2E7D32]" />
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
-          </div>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Common questions on sprayers, pumps, engines, and spare parts
+    <section className="py-16 bg-gradient-to-b from-[#f0fdf4] to-[#dcfce7]">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1E7A3C] mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-[#2E7D32] max-w-2xl mx-auto">
+            Find answers to common questions about our products and services
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {faqData.map((faq, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-sm border border-[#2E7D32]/10 overflow-hidden transition-all duration-300 hover:shadow-md h-full flex flex-col cursor-pointer" onClick={() => toggleFAQ(index)}>
-              <div className="p-5 flex-shrink-0 border-b border-[#2E7D32]/10">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 bg-[#E8F5E9] rounded-lg text-[#2E7D32] flex-shrink-0">
-                    <faq.icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-base font-medium text-foreground line-clamp-2">{faq.question}</h3>
-                </div>
-              </div>
-              <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out flex-grow ${activeIndex === index ? 'opacity-100' : 'opacity-0 h-0'}`}
+
+        {/* FAQ Items */}
+        <div className="max-w-4xl mx-auto space-y-4">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="bg-[#f0fdf4] rounded-xl border border-[#dcfce7] overflow-hidden"
+            >
+              <button
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-[#dcfce7] transition-colors"
+                onClick={() => toggleFAQ(index)}
               >
-                <div className="px-5 py-4 text-sm text-muted-foreground">
+                <span className="font-semibold text-[#1E7A3C] pr-4">
+                  {faq.question}
+                </span>
+                <ChevronDown
+                  className={`w-5 h-5 text-[#2E7D32] transition-transform duration-300 flex-shrink-0 ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  openIndex === index ? "max-h-96" : "max-h-0"
+                }`}
+              >
+                <div className="px-6 pb-5 pt-2 text-[#2E7D32] leading-relaxed">
                   {faq.answer}
                 </div>
               </div>
@@ -86,5 +95,7 @@ export const FAQSection = () => {
         </div>
       </div>
     </section>
- );
+  );
 };
+
+export default FAQSection;

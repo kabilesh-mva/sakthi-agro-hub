@@ -2,30 +2,31 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Package, CheckCircle, Star } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
 export const GreatQualityProducts = () => {
+  const { t } = useLanguage();
+
   const qualityFeatures = [
     {
       icon: Shield,
-      title: "Quality Assured",
-      description:
-        "Every product undergoes rigorous quality testing before delivery",
+      title: t("quality_1_title"),
+      description: t("quality_1_desc"),
     },
     {
       icon: Package,
-      title: "Genuine Parts",
-      description:
-        "Only authentic and genuine spare parts from trusted manufacturers",
+      title: t("quality_2_title"),
+      description: t("quality_2_desc"),
     },
     {
       icon: CheckCircle,
-      title: "Certified Standards",
-      description:
-        "All products meet international quality and safety standards",
+      title: t("quality_3_title"),
+      description: t("quality_3_desc"),
     },
     {
       icon: Star,
-      title: "Trusted Brands",
-      description: "We partner with leading manufacturers for superior quality",
+      title: t("quality_4_title"),
+      description: t("quality_4_desc"),
     },
   ];
 
@@ -40,11 +41,10 @@ export const GreatQualityProducts = () => {
           className="text-center mb-8 sm:mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#2E7D32] mb-3 sm:mb-4">
-            Great Quality Products
+            {t("quality_title")}
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            We ensure the highest quality standards for all our agricultural
-            products and equipment
+            {t("quality_subtitle")}
           </p>
         </motion.div>
 
@@ -84,32 +84,27 @@ export const GreatQualityProducts = () => {
           <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
             <div className="flex-1 text-center md:text-left w-full">
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-3">
-                Our Commitment to Quality
+                {t("quality_commitment_title")}
               </h3>
               <p className="text-sm md:text-base text-muted-foreground mb-4">
-                At Sakthi Agro, we believe that quality is the foundation of
-                trust. Every product we offer is carefully selected and tested
-                to ensure it meets the highest standards of performance,
-                durability, and safety. Our commitment to quality ensures that
-                farmers get reliable equipment that enhances productivity and
-                reduces downtime.
+                {t("quality_commitment_desc")}
               </p>
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                   <span className="text-xs sm:text-sm">
-                    100% Authentic Products
+                    {t("quality_badge_1")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                   <span className="text-xs sm:text-sm">
-                    Warranty Protection
+                    {t("quality_badge_2")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
-                  <span className="text-xs sm:text-sm">Expert Support</span>
+                  <span className="text-xs sm:text-sm">{t("quality_badge_3")}</span>
                 </div>
               </div>
             </div>
@@ -118,6 +113,7 @@ export const GreatQualityProducts = () => {
                 src="/src/assets/Sakthi agro logo1.png"
                 alt="Sakthi Agro Quality Products"
                 className="max-w-full h-auto rounded-lg shadow-md w-48 sm:w-64"
+                loading="lazy"
               />
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Phone, ShoppingCart, User } from "lucide-react";
 
@@ -16,7 +16,7 @@ import CountUp from "./CountUp";
 // Import Ribbons
 import Ribbons from "./Ribbons";
 
-// Dust Particle System Component
+// Optimized Dust Particle System with reduced count and better performance
 const DustParticleSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -27,10 +27,16 @@ const DustParticleSystem = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Use device pixel ratio for sharp rendering
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    
     // Set canvas size to match window
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.scale(dpr, dpr);
     };
 
     resizeCanvas();
@@ -45,51 +51,25 @@ const DustParticleSystem = () => {
       speedY: number;
       opacity: number;
       color: string;
-      resetPosition: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1; // Size between 1-3 pixels
-        this.speedX = Math.random() * 0.5 - 0.25; // Slow horizontal movement
-        this.speedY = Math.random() * 0.5 - 0.5; // Slow vertical movement (slightly upward)
-        this.opacity = Math.random() * 0.1 + 0.05; // Very low opacity (0.05-0.15)
-        this.color = `rgba(210, 180, 140, ${this.opacity})`; // Dusty beige color
-        this.resetPosition = Math.random() * 100 + 50; // Random reset threshold
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.size = Math.random() * 1.5 + 0.5; // Smaller particles
+        this.speedX = Math.random() * 0.3 - 0.15; // Slower movement
+        this.speedY = Math.random() * 0.3 - 0.3; // Slow upward drift
+        this.opacity = Math.random() * 0.08 + 0.02; // Very subtle
+        this.color = `rgba(210, 180, 140, ${this.opacity})`;
       }
 
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        // Add some organic movement variation
-        this.speedX += Math.random() * 0.05 - 0.025;
-        this.speedY += Math.random() * 0.05 - 0.025;
-
-        // Limit speed to prevent particles from moving too fast
-        if (this.speedX > 0.5) this.speedX = 0.5;
-        if (this.speedX < -0.5) this.speedX = -0.5;
-        if (this.speedY > 0.5) this.speedY = 0.5;
-        if (this.speedY < -0.5) this.speedY = -0.5;
-
         // Reset particles that go off screen
-        if (
-          this.x > canvas.width ||
-          this.x < 0 ||
-          this.y > canvas.height ||
-          this.y < 0
-        ) {
-          if (Math.random() > 0.7) {
-            // Only reset some particles to create variety
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-          }
-        }
-
-        // Occasionally reset particles for natural appearance
-        if (Math.random() < 0.001) {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
+        if (this.x > window.innerWidth || this.x < 0 || this.y > window.innerHeight || this.y < 0) {
+          this.x = Math.random() * window.innerWidth;
+          this.y = Math.random() * window.innerHeight;
         }
       }
 
@@ -102,30 +82,35 @@ const DustParticleSystem = () => {
       }
     }
 
-    // Create particles
+    // Create fewer particles for better performance
     const particles: Particle[] = [];
-    const particleCount = Math.floor(window.innerWidth / 8); // Adjust density based on screen width
+    const particleCount = Math.min(Math.floor(window.innerWidth / 15), 100); // Max 100 particles
 
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
 
-    // Animation loop
+    // Throttled animation loop
     let animationFrameId: number;
+    let lastTime = 0;
+    const throttleMs = 16; // ~60fps cap
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
       if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
+      
+      if (timestamp - lastTime >= throttleMs) {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        particles.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+        lastTime = timestamp;
+      }
 
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(0);
 
     // Cleanup
     return () => {
@@ -138,6 +123,7 @@ const DustParticleSystem = () => {
     <canvas
       ref={canvasRef}
       className="absolute top-0 left-0 w-full h-full pointer-events-none z-11"
+      style={{ willChange: "auto" }}
     />
   );
 };

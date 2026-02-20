@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 export default function CountUp({
   value,
   className = "",
   duration = 2,
   delay = 0,
-  key, // Add key prop to trigger re-animation on change (optional)
 }) {
   const valueStr = value.toString();
   const [count, setCount] = useState(0);
@@ -36,7 +35,6 @@ export default function CountUp({
     // Extract numeric value by removing units, %, +, etc.
     let numericValue = 0;
     if (isRangeFormat) {
-      // For range formats like "2-5 Days", extract the first number
       const rangeMatch = valueStr.match(/^([0-9]+)-([0-9]+)/);
       if (rangeMatch) {
         numericValue = parseFloat(rangeMatch[1]) || 0;
@@ -45,23 +43,20 @@ export default function CountUp({
       numericValue = parseFloat(valueStr.replace(/[^\d.-]/g, "")) || 0;
     }
 
-    // Reset count when key changes (role changes)
     setCount(0);
 
-    const startTime = Date.now();
-    const endTime = startTime + duration * 1000;
+    let animationFrameID: number;
+    const startTime = performance.now();
+    const durationMs = duration * 1000;
 
-    const timer = setInterval(() => {
-      const now = Date.now();
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / (duration * 1000), 1);
-
-      // Ease-out function
-      const easeProgress = 1 - Math.pow(1 - progress, 2);
+    const animateCount = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      
+      const easeProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out for smoother end
       let currentValue = 0;
 
       if (isTimeFormat) {
-        // For time formats, maintain decimal precision
         currentValue = parseFloat((easeProgress * numericValue).toFixed(1));
       } else {
         currentValue = Math.floor(easeProgress * numericValue);
@@ -69,20 +64,68 @@ export default function CountUp({
 
       setCount(currentValue);
 
-      if (now >= endTime) {
-        if (isTimeFormat) {
-          setCount(parseFloat(numericValue.toFixed(1)));
-        } else {
-          setCount(numericValue);
-        }
-        clearInterval(timer);
+      if (progress < 1) {
+        animationFrameID = requestAnimationFrame(animateCount);
+      } else {
+        setCount(isTimeFormat ? parseFloat(numericValue.toFixed(1)) : numericValue);
       }
-    }, 16); // ~60fps
+    };
+
+    animationFrameID = requestAnimationFrame(animateCount);
 
     return () => {
-      clearInterval(timer);
+      cancelAnimationFrame(animationFrameID);
     };
-  }, [key, valueStr, duration, isTimeFormat, isRangeFormat, shouldAnimate]);
+  }, [valueStr, duration, isTimeFormat, isRangeFormat, shouldAnimate]);
+
+  const { formattedCount, suffix, customRangeRender } = React.useMemo(() => {
+    let fmtCount = "";
+    let sfx = "";
+    let customRender = null;
+
+    if (
+      isRangeFormat ||
+      isTimeFormat ||
+      isPercentage ||
+      isPlusValue ||
+      isFraction
+    ) {
+      const suffixMatch = valueStr.match(/([a-zA-Z%+/-]+)/);
+      sfx = suffixMatch ? suffixMatch[0] : "";
+
+      if (isTimeFormat && count % 1 !== 0) {
+        fmtCount = count.toFixed(1);
+      } else {
+        fmtCount = Math.floor(count).toLocaleString();
+      }
+
+      if (isRangeFormat) {
+        const rangeMatch = valueStr.match(/^([0-9]+)-([0-9]+)\s*(.+)/);
+        if (rangeMatch) {
+          const secondNum = rangeMatch[2];
+          const unit = rangeMatch[3];
+          customRender = (
+            <motion.span
+              className={className}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              key={key}
+            >
+              {fmtCount}-{secondNum} {unit}
+            </motion.span>
+          );
+        }
+      }
+    } else {
+      const hasPercent = valueStr.includes("%");
+      const hasPlus = valueStr.includes("+");
+      sfx = hasPercent ? "%" : hasPlus ? "+" : "";
+      fmtCount = count.toLocaleString();
+    }
+
+    return { formattedCount: fmtCount, suffix: sfx, customRangeRender: customRender };
+  }, [count, valueStr, isRangeFormat, isTimeFormat, isPercentage, isPlusValue, isFraction, className]);
 
   if (is247) {
     return (
@@ -91,61 +134,13 @@ export default function CountUp({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        key={key} // Use key to force re-render and re-animation
       >
         {valueStr}
       </motion.span>
     );
   }
 
-  // Rendering logic
-  let formattedCount;
-  let suffix = "";
-
-  if (
-    isRangeFormat ||
-    isTimeFormat ||
-    isPercentage ||
-    isPlusValue ||
-    isFraction
-  ) {
-    // Extract the suffix (unit, %, +, etc.)
-    const suffixMatch = valueStr.match(/([a-zA-Z%+/-]+)/);
-    suffix = suffixMatch ? suffixMatch[0] : "";
-
-    // Format the number with commas, but preserve decimal for time formats
-    if (isTimeFormat && count % 1 !== 0) {
-      formattedCount = count.toFixed(1);
-    } else {
-      formattedCount = Math.floor(count).toLocaleString();
-    }
-
-    // For range formats, we need to reconstruct the full string
-    if (isRangeFormat) {
-      const rangeMatch = valueStr.match(/^([0-9]+)-([0-9]+)\s*(.+)/);
-      if (rangeMatch) {
-        const secondNum = rangeMatch[2];
-        const unit = rangeMatch[3];
-        return (
-          <motion.span
-            className={className}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            key={key}
-          >
-            {formattedCount}-{secondNum} {unit}
-          </motion.span>
-        );
-      }
-    }
-  } else {
-    // Handle purely numeric values with counting animation
-    const hasPercent = valueStr.includes("%");
-    const hasPlus = valueStr.includes("+");
-    suffix = hasPercent ? "%" : hasPlus ? "+" : "";
-    formattedCount = count.toLocaleString();
-  }
+  if (customRangeRender) return customRangeRender;
 
   return (
     <motion.span
@@ -153,7 +148,6 @@ export default function CountUp({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      key={key}
     >
       {formattedCount}
       {suffix}
